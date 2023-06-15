@@ -27,7 +27,7 @@ function App() {
       }
 
       return (
-          <ContractData contract='HelloBlockchain' method='SendResponse' drizzle={drizzle} drizzleState={drizzleState}/>
+          <ContractData contract='HelloBlockchain' method='seeOwn' drizzle={drizzle} drizzleState={drizzleState}/>
         )
       }}
   </DrizzleContext.Consumer>

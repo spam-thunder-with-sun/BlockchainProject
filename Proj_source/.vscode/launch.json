@@ -1,0 +1,19 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "truffle",
+            "request": "launch",
+            "name": "Truffle - Debug Transaction",
+            "stopOnEntry": false,
+            "txHash": "0x97163b3e90a6577a011ce57b4df91e625473ab1b39058b60a97310d674b2510a",
+            "files": [],
+            "workingDirectory": "${workspaceFolder}",
+            "providerUrl": "http://127.0.0.1:7545",
+            "disableFetchExternal": false
+        }
+    ]
+}

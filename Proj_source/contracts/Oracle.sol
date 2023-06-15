@@ -33,4 +33,6 @@ contract Oracle {
     function getData(bytes32 requestId) public view returns (uint256) {
         return data[requestId];
     }
+
+    
 }

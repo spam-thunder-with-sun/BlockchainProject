@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT 
 pragma solidity >=0.4.25 <0.9.0;
 
+import "./Oracle.sol";
+
 contract HelloBlockchain {
     enum StateType { Request, Respond }
 
@@ -11,10 +13,14 @@ contract HelloBlockchain {
     string public RequestMessage;
     string public ResponseMessage;
 
+    Oracle private orac;
+
     constructor(string memory message) {
         Requestor = msg.sender;
         RequestMessage = message;
         State = StateType.Request;
+        orac = new Oracle();
+
     }
 
     // call this function to send a request
@@ -39,5 +45,11 @@ contract HelloBlockchain {
     function seeOwn() public view returns (address Requesto){
 
         return Requestor;
+    }
+
+    function getOracleinfo() public returns(uint256){
+        bytes32 infoid = orac.requestData("http://localhost:3000/data");
+        uint256 info = orac.getData(infoid);
+        return info;
     }
 }
