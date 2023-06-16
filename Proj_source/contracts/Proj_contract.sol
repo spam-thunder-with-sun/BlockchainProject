@@ -2,87 +2,159 @@ pragma solidity ^0.8.0;
 
 contract ElectricEngine {
 
-    mapping(address => bool) public m1;
-    mapping(address => bool) public m2;
-    mapping(address => bool) public g;
-    mapping(address => bool) public f;
+    mapping(address => bool) private m1;
+    mapping(address => bool) private m2;
+    mapping(address => bool) private g;
+    mapping(address => bool) private f;
+    address private certifier; //who specified the parameter for the verification.
 
-    mapping(bytes32 => bool) public bubbleCopper;
-    mapping(bytes32 => bool) public bubbleSteel;
-    mapping(bytes32 => bool) public cages;
-    mapping(bytes32 => bool) public engines;
-    mapping(bytes32 => bool) public threads;
+    mapping(address => uint) private timem1;
+    mapping(address => uint) private timem2;
+    mapping(address => uint) private timeg;
+    mapping(address => uint) private timef;
 
-    mapping(address => uint256) public storedItems;
+    address private owner;
+
+    mapping(bytes32 => bool) private bubbleCopper;
+    mapping(bytes32 => bool) private bubbleSteel;
+    mapping(bytes32 => bool) private cages;
+    mapping(bytes32 => bool) private engines;
+    mapping(bytes32 => bool) private threads;
+
+
+
+    mapping(address => uint256) private storedItems;
 
     event StorageFeePaid(address indexed payer, uint256 amount);
     
-    int proof1;
+    int[] private proof;
+    int[] private info;
 
     constructor(){
       m1[0x984765fCd218D3937E4298Dd1746b47828D5E9f8] = true;
       m2[0xCCf44CeA3140c0253D845D04973bC0D0E5eED163] = true;
       f[0x10CdeAE4C0d04aD512E017E3F7d236a463c578bB] = true;
       g[0xeaaF394C2468442eCb543d43B11326903e27e311] = true;
-      proof1 = 4;
+      timem1[0x984765fCd218D3937E4298Dd1746b47828D5E9f8] = block.timestamp + 40;
+      timem2[0x984765fCd218D3937E4298Dd1746b47828D5E9f8] = block.timestamp + 40;
+      timeg[0x984765fCd218D3937E4298Dd1746b47828D5E9f8] = block.timestamp + 40;
+      timef[0x984765fCd218D3937E4298Dd1746b47828D5E9f8] = block.timestamp + 40;
+      certifier = 0x984765fCd218D3937E4298Dd1746b47828D5E9f8;
+      owner = msg.sender;
+
+
+     
     }
 
-    function addm1(int8 info) external {
-        require(info>3,"you aren't a m1");
+    
+
+    function UserProofs( int8 info1, int8 info2, int8 info3, int8 info4, int8 info5) external{
+        require(msg.sender == certifier, "you are not a certifier");
+        info[0] = info1;
+        info[1] = info2;
+        info[2] = info3;
+        info[3] = info4;
+        info[4] = info5;
+
+    }
+
+    function UserProofs(int8 proof1, int8 proof2, int8 proof3, int8 proof4, int proof5) external{
+        require(msg.sender == certifier, "you are not a certifier");
+        proof[0] = proof1;
+        proof[1] = proof2;
+        proof[2] = proof3;
+        proof[3] = proof4;
+        proof[4] = proof5;
+
+    }
+
+    function addcertifier(int infop) external{
+        require(infop>3,"you aren't a cetifier");
+        certifier = msg.sender;
+
+    }
+
+    function addm1(int8 infop) external {
+        require(infop>info[0],"you aren't a m1");
+        timem1[0x984765fCd218D3937E4298Dd1746b47828D5E9f8] = block.timestamp + 40;
         m1[msg.sender] = true;
     } 
 
-    function addm2(int8 info) external {
-        require(info>3,"you aren't a m2");
+    function addm2(int8 infop) external {
+        require(infop>info[1],"you aren't a m2");
+        timem2[0x984765fCd218D3937E4298Dd1746b47828D5E9f8] = block.timestamp + 40;
         m1[msg.sender] = true;
     } 
 
-    function addG(int8 info) external {
-        require(info>3,"you aren't a G");
+    function addG(int8 infop) external {
+        require(infop>info[2],"you aren't a G");
+        timeg[0x984765fCd218D3937E4298Dd1746b47828D5E9f8] = block.timestamp + 40;
         m1[msg.sender] = true;
     } 
 
-    function addmF(int8 info) external {
-        require(info>3,"you aren't a F");
+    function addmF(int8 infop) external {
+        require(infop>info[4],"you aren't a F");
+        timef[0x984765fCd218D3937E4298Dd1746b47828D5E9f8] = block.timestamp + 40;
         m1[msg.sender] = true;
     } 
 
 
-    function certificateSteels(int proof, string memory object) external {
-        require(proof>proof1,"not valid Steels");
+    function certificateSteels(int proofo, string memory object) external {
+        require(proofo>proof[0],"not valid Steels");
         require(f[msg.sender] == true, "you are not qualified user");
         bubbleSteel[keccak256(abi.encodePacked(object))] = true;
     }   
 
-    function certificateCoppers(int proof, string memory object) external {
-        require(proof>3,"not valid Coppers");
+    function certificateCoppers(int proofo, string memory object) external {
+        require(proofo>proof[1],"not valid Coppers");
         require(g[msg.sender] == true, "you are not qualified user");
         bubbleCopper[keccak256(abi.encodePacked(object))] = true;
     }   
 
-    function certificateThreads(int proof, string memory object) external {
-
-        require(proof>5,"not valid Threads");
+    function certificateThreads(int proofo, string memory object) external {
+        require(proofo>proof[2],"not valid Threads");
         require(bubbleSteel[keccak256(abi.encodePacked(object))] == true, "not found Steels");
         require(bubbleCopper[keccak256(abi.encodePacked(object))] == true, "not found Coppers");
         require(f[msg.sender] == true, "you are not qualified user");
         threads[keccak256(abi.encodePacked(object))] = true;
     } 
 
-    function certificateCages(int proof, string memory object) external {
-
-        require(proof>5,"not valid Cages");
+    function certificateCages(int proofo, string memory object) external {
+        require(proofo>proof[3],"not valid Cages");
         require(threads[keccak256(abi.encodePacked(object))] == true, "not found Threads");
         require(g[msg.sender] == true || m1[msg.sender] == true, "you are not qualified user");
         cages[keccak256(abi.encodePacked(object))] = true;
     } 
 
-    function certificateEngines(int proof, string memory object) external {
-
-        require(proof>5,"not valid Cages");
+    function certificateEngines(int proofo, string memory object) external {
+        require(proofo>proof[4],"not valid Cages");
         require(cages[keccak256(abi.encodePacked(object))] == true, "not found Threads");
         require(m1[msg.sender] == true || m2[msg.sender] == true, "you are not qualified user");
         threads[keccak256(abi.encodePacked(object))] = true;
+    } 
+
+    function isCertificatesSteels(string memory object) view external returns(bool) {
+        return bubbleSteel[keccak256(abi.encodePacked(object))];
+    }   
+
+    function isCertificatedCoppers(string memory object) view external returns(bool){
+   
+        return bubbleCopper[keccak256(abi.encodePacked(object))];
+    }   
+
+    function isCertificatedThreads(string memory object) view external returns(bool){
+      
+        return threads[keccak256(abi.encodePacked(object))];
+    } 
+
+    function isCertificatedCages(string memory object) view external returns(bool){
+ 
+        return cages[keccak256(abi.encodePacked(object))];
+    } 
+
+    function isCertificatedEngines(string memory object) view external returns(bool){
+    
+        return threads[keccak256(abi.encodePacked(object))];
     } 
 
 
