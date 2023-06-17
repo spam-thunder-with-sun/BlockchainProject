@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
 contract ElectricEngine {
@@ -100,14 +101,17 @@ contract ElectricEngine {
 
 
     function certificateSteels(int proofo, string memory object) external {
+      
         require(proofo>proof[0],"not valid Steels");
         require(f[msg.sender] == true, "you are not qualified user");
+        require(timef[msg.sender]>block.timestamp, "your time of usage end");
         bubbleSteel[keccak256(abi.encodePacked(object))] = true;
     }   
 
     function certificateCoppers(int proofo, string memory object) external {
         require(proofo>proof[1],"not valid Coppers");
         require(g[msg.sender] == true, "you are not qualified user");
+        require(timeg[msg.sender]>block.timestamp, "your time of usage end");
         bubbleCopper[keccak256(abi.encodePacked(object))] = true;
     }   
 
@@ -116,20 +120,23 @@ contract ElectricEngine {
         require(bubbleSteel[keccak256(abi.encodePacked(object))] == true, "not found Steels");
         require(bubbleCopper[keccak256(abi.encodePacked(object))] == true, "not found Coppers");
         require(f[msg.sender] == true, "you are not qualified user");
+        require(timef[msg.sender]>block.timestamp, "your time of usage end");
         threads[keccak256(abi.encodePacked(object))] = true;
     } 
 
     function certificateCages(int proofo, string memory object) external {
         require(proofo>proof[3],"not valid Cages");
         require(threads[keccak256(abi.encodePacked(object))] == true, "not found Threads");
-        require(g[msg.sender] == true || m1[msg.sender] == true, "you are not qualified user");
+        require(g[msg.sender] == true || m1[msg.sender] == true, "you are not qualified user"); //sistemare
+        require(timeg[msg.sender]>block.timestamp || timem1[msg.sender]>block.timestamp, "your time of usage end"); //sistemare
         cages[keccak256(abi.encodePacked(object))] = true;
     } 
 
     function certificateEngines(int proofo, string memory object) external {
         require(proofo>proof[4],"not valid Cages");
         require(cages[keccak256(abi.encodePacked(object))] == true, "not found Threads");
-        require(m1[msg.sender] == true || m2[msg.sender] == true, "you are not qualified user");
+        require(m1[msg.sender] == true || m2[msg.sender] == true, "you are not qualified user");//sistemare
+        require(timem1[msg.sender]>block.timestamp || timem2[msg.sender]>block.timestamp, "your time of usage end"); //sistemare
         threads[keccak256(abi.encodePacked(object))] = true;
     } 
 
