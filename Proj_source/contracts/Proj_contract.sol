@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
+import "@openzeppelin/contracts/utils/math/SafeMath.sol";
+
 contract ElectricEngine {
 
     mapping(address => bool) private m1;
@@ -22,8 +24,7 @@ contract ElectricEngine {
     mapping(bytes32 => bool) private engines;
     mapping(bytes32 => bool) private threads;
 
-
-
+ 
     mapping(address => uint256) private storedItems;
 
     event StorageFeePaid(address indexed payer, uint256 amount);
@@ -32,14 +33,16 @@ contract ElectricEngine {
     int[] private info;
 
     constructor(){
+
       m1[0x984765fCd218D3937E4298Dd1746b47828D5E9f8] = true;
       m2[0xCCf44CeA3140c0253D845D04973bC0D0E5eED163] = true;
       f[0x10CdeAE4C0d04aD512E017E3F7d236a463c578bB] = true;
       g[0xeaaF394C2468442eCb543d43B11326903e27e311] = true;
-      timem1[0x984765fCd218D3937E4298Dd1746b47828D5E9f8] = block.timestamp + 40;
-      timem2[0x984765fCd218D3937E4298Dd1746b47828D5E9f8] = block.timestamp + 40;
-      timeg[0x984765fCd218D3937E4298Dd1746b47828D5E9f8] = block.timestamp + 40;
-      timef[0x984765fCd218D3937E4298Dd1746b47828D5E9f8] = block.timestamp + 40;
+      uint256 time = SafeMath.add(block.timestamp, 40);
+      timem1[0x984765fCd218D3937E4298Dd1746b47828D5E9f8] = time;
+      timem2[0x984765fCd218D3937E4298Dd1746b47828D5E9f8] = time;
+      timeg[0x984765fCd218D3937E4298Dd1746b47828D5E9f8] = time;
+      timef[0x984765fCd218D3937E4298Dd1746b47828D5E9f8] = time;
       certifier = 0x984765fCd218D3937E4298Dd1746b47828D5E9f8;
       owner = msg.sender;
 
@@ -77,25 +80,25 @@ contract ElectricEngine {
 
     function addm1(int8 infop) external {
         require(infop>info[0],"you aren't a m1");
-        timem1[0x984765fCd218D3937E4298Dd1746b47828D5E9f8] = block.timestamp + 40;
+        timem1[msg.sender] = SafeMath.add(block.timestamp, 40);
         m1[msg.sender] = true;
     } 
 
     function addm2(int8 infop) external {
         require(infop>info[1],"you aren't a m2");
-        timem2[0x984765fCd218D3937E4298Dd1746b47828D5E9f8] = block.timestamp + 40;
+        timem2[msg.sender] = SafeMath.add(block.timestamp, 40);
         m1[msg.sender] = true;
     } 
 
     function addG(int8 infop) external {
         require(infop>info[2],"you aren't a G");
-        timeg[0x984765fCd218D3937E4298Dd1746b47828D5E9f8] = block.timestamp + 40;
+        timeg[msg.sender] = SafeMath.add(block.timestamp, 40);
         m1[msg.sender] = true;
     } 
 
     function addmF(int8 infop) external {
         require(infop>info[4],"you aren't a F");
-        timef[0x984765fCd218D3937E4298Dd1746b47828D5E9f8] = block.timestamp + 40;
+        timef[msg.sender] = SafeMath.add(block.timestamp, 40);
         m1[msg.sender] = true;
     } 
 
