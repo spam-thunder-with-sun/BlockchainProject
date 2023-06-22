@@ -1,6 +1,6 @@
 const hel = artifacts.require("./HelloBlockchain.sol");
 
-contract("Hello", (accounts) => {
+contract("HelloBlockchain", (accounts) => {
   let hello;
 
   before(async () => {

@@ -2,7 +2,7 @@
   "dependencies": {
     "@drizzle/store": "^1.5.3",
     "@openzeppelin/contracts": "^4.9.2",
-    "@truffle/hdwallet-provider": "^2.1.12",
+    "@truffle/hdwallet-provider": "^1.7.0",
     "create-react-app": "^5.0.1"
   }
 }

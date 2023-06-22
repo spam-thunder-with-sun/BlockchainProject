@@ -11,10 +11,10 @@ contract ElectricEngine {
     mapping(address => bool) private f;
     address private certifier; //who specified the parameter for the verification.
 
-    mapping(address => uint) private timem1;
-    mapping(address => uint) private timem2;
-    mapping(address => uint) private timeg;
-    mapping(address => uint) private timef;
+    mapping(address => uint256) private timem1;
+    mapping(address => uint256) private timem2;
+    mapping(address => uint256) private timeg;
+    mapping(address => uint256) private timef;
 
     address private owner;
 
@@ -29,8 +29,8 @@ contract ElectricEngine {
 
     event StorageFeePaid(address indexed payer, uint256 amount);
     
-    int[] private proof;
-    int[] private info;
+    int[5] private proof;
+    int[5] private info;
 
     constructor(){
 
@@ -40,9 +40,9 @@ contract ElectricEngine {
       g[0xeaaF394C2468442eCb543d43B11326903e27e311] = true;
       uint256 time = SafeMath.add(block.timestamp, 40);
       timem1[0x984765fCd218D3937E4298Dd1746b47828D5E9f8] = time;
-      timem2[0x984765fCd218D3937E4298Dd1746b47828D5E9f8] = time;
-      timeg[0x984765fCd218D3937E4298Dd1746b47828D5E9f8] = time;
-      timef[0x984765fCd218D3937E4298Dd1746b47828D5E9f8] = time;
+      timem2[0xCCf44CeA3140c0253D845D04973bC0D0E5eED163] = time;
+      timeg[0x10CdeAE4C0d04aD512E017E3F7d236a463c578bB] = time;
+      timef[0xeaaF394C2468442eCb543d43B11326903e27e311] = time;
       certifier = 0x984765fCd218D3937E4298Dd1746b47828D5E9f8;
       owner = msg.sender;
 
@@ -51,8 +51,10 @@ contract ElectricEngine {
     }
 
     
+    
+    
 
-    function UserProofs( int8 info1, int8 info2, int8 info3, int8 info4, int8 info5) external{
+    function UserInfos( int8 info1, int8 info2, int8 info3, int8 info4, int8 info5) external{
         require(msg.sender == certifier, "you are not a certifier");
         info[0] = info1;
         info[1] = info2;
@@ -167,6 +169,26 @@ contract ElectricEngine {
         return threads[keccak256(abi.encodePacked(object))];
     } 
 
+   function isM1() view external returns(bool) {
+        return m1[msg.sender];
+    }   
+
+    function isM2() view external returns(bool){
+   
+        return m2[msg.sender];
+    }   
+
+    function isF() view external returns(bool){
+      
+        return f[msg.sender];
+    } 
+
+    function isG() view external returns(bool){
+ 
+        return g[msg.sender];
+    } 
+
+
 
 
 
@@ -194,3 +216,4 @@ contract ElectricEngine {
         emit ItemsRetrieved(msg.sender, _amount);
     }*/
 }
+
