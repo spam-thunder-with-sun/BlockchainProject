@@ -27,7 +27,7 @@ contract ElectricEngine {
  
     mapping(address => uint256) private storedItems;
 
-    event StorageFeePaid(address indexed payer, uint256 amount);
+    event addedm1(address indexed user);
     
     int[5] private proof;
     int[5] private info;
@@ -84,6 +84,7 @@ contract ElectricEngine {
         require(infop>info[0],"you aren't a m1");
         timem1[msg.sender] = SafeMath.add(block.timestamp, 40);
         m1[msg.sender] = true;
+        emit addedm1(msg.sender);
     } 
 
     function addm2(int8 infop) external {
