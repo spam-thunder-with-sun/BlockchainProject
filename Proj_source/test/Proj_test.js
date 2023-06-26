@@ -4,6 +4,8 @@ contract("ElectricEngine", accounts => {
   it("certification process", async () => {
     const projectinstance = await project.deployed();
 
+    await projectinstance.addcertifier(6, {from: accounts[0]});
+
     await projectinstance.addmF(6, {from: accounts[3]});
 
     await projectinstance.addG(6, {from: accounts[2]});
