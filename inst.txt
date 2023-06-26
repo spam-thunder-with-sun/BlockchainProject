@@ -20,7 +20,7 @@ proj_source:
 il contratto del progetto è: "Proj_contract.sol"
 il frontend del progetto è: "front/src/App.js"
  
-testare funziomento contrato (in Proj_source):
+testare funziomento contratto (in Proj_source):
  -ganache deve runnare
  -truffle compile
  -truffle migrate
