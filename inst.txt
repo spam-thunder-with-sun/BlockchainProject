@@ -1,0 +1,29 @@
+requisti:
+ -nodejs
+ -npm
+ -metamask plugin nel browser
+
+ganache:
+-crea un workspace
+-minimo 4 account
+-collegare il workspace con il progetto indicando "path_to/truffle-config.js" in "TRUFFLE PROJECTS" nelle impostazioni del workspace
+
+proj_source:
+-truffle-config.js:
+ -metti l'host, la porta e il network id indicato in ganache
+ 
+il contratto del progetto è: "Proj_contract.sol"
+il frontend del progetto è: "front/src/App.js"
+ 
+testare funziomento contrato (in Proj_source):
+ -truffle compile
+ -truffle migrate
+ -truffle test test/Proj_test.js
+ 
+testare frontend (in Proj_source/front):
+ -npm start
+ -Appare una pagina dal browser
+ -inserisci 2 nella casella di testo per aggiungerti come m1
+ -conferma l'operazione con metamask
+ -poi dovrebbe apparirti "true" in "are you m1?"
+
