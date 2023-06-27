@@ -129,20 +129,23 @@ contract ElectricEngine {
     */
 
     function certificateThreads(uint fatt, string memory producer) external returns(string memory, uint) { //Ask for threads data - Producer and Fattura d'aquisto
+        require(m1[msg.sender] == true || m2[msg.sender] == true, "you are not qualified user");//sistemare
         require(timef[msg.sender]>block.timestamp, "your time of usage end");
         threads[keccak256(abi.encodePacked(fatt))] = true; //the key value for the threads is now the invoice (fattura) code
         return(producer, fatt); //this function return the producer and the invoice code - if useful
     }
 
     function certificateCage(uint fatt, string memory producer) external returns(string memory, uint) { //Ask for cages data - Producer and Fattura d'aquisto
+        require(m1[msg.sender] == true || m2[msg.sender] == true, "you are not qualified user");//sistemare
         require(timef[msg.sender]>block.timestamp, "your time of usage end");
         cages[keccak256(abi.encodePacked(fatt))] = true;
         return(producer, fatt); //As above
     }
 
-setEUCertificate('xx','3G', 135, 63, 'A' ,'Poli', '3F', 230, 50, -1, 'B35'); 
     function certificateEngines(int proofo, uint cage_fatt, uint thread_fatt, int temp, int ts, int fr, int Y, string memory object) external {
         require(proofo>proof[4],"not valid Cages");
+        require(m1[msg.sender] == true || m2[msg.sender] == true, "you are not qualified user");//sistemare
+        require(timem1[msg.sender]>block.timestamp || timem2[msg.sender]>block.timestamp, "your time of usage end"); //sistemare
         require(cages[keccak256(abi.encodePacked(thread_fatt))] == true, "cages not found"); //thread_fatt -> thread invoice id
         require(threads[keccak256(abi.encodePacked(cage_fatt))] = true, "threads not found"); //cage_fatt -> cage invoice id
         require(temp <= 135, "Temperature class error"); //check if the tested temperature class is less then or equal to teh one defined in the certificate (defiened when the cintract is created
