@@ -32,6 +32,21 @@ contract ElectricEngine {
     int[5] private proof;
     int[5] private info;
 
+    struct EU_certificate {  //information inside a EU certificate that last for 10 years
+        string model; //model of the motor
+        string EX_category; 
+        int Temp_classes; //max superficial temperature the product can reach
+        int h_axle_mm; //hight of the axle in mm
+        string lamellar_pack; //code that corrispond to a series of possible value for the lamellar pack dimension
+        string polaity; //code fro the polarity - single number or poli
+        string motor_type; 
+        int tension; 
+        int frequency;
+        int Y; 
+        //tension, frequancy and Y must be used for the alimentation tension. in some cases Y is not used, so -1 is inserted
+        string IM_code;
+    }
+
     constructor(){
 
       m1[0x984765fCd218D3937E4298Dd1746b47828D5E9f8] = true;
@@ -45,13 +60,20 @@ contract ElectricEngine {
       timef[0xeaaF394C2468442eCb543d43B11326903e27e311] = time;
       certifier = 0x984765fCd218D3937E4298Dd1746b47828D5E9f8;
       owner = msg.sender;
+      setEUCertificate('xx','3G', 135, 63, 'A' ,'Poli', '3F', 230, 50, -1, 'B35'); //create a test certificate
+
+      // DOMANDA -- Facciamo creare i certificati europei agli utenti certificatori oppure usiamo i certificatori solo come gli utenti che controllano i singoli lotti?
 
 
      
     }
 
-    
-    
+    EU_certificate testmotor; //test certifiacate - in thoery multiple certificate can be inserted for multiple products
+
+
+    function setEUCertificate(string memory model, string memory ex_cat, int tc, int h, string memory lp, string memory p, string memory mt, int t, int frq, int y, string memory code  ) private{ //create an actual EU_certificate with some possible data - 
+        testmotor = EU_certificate(model,ex_cat, tc, h, lp, p, mt, t, frq, y, code);
+    }
     
 
     function UserInfos( int8 info1, int8 info2, int8 info3, int8 info4, int8 info5) external{
@@ -105,55 +127,60 @@ contract ElectricEngine {
         m1[msg.sender] = true;
     } 
 
+    /*
 
-    function certificateSteels(int proofo, string memory object) external {
+    FOR NOW CERTIFY ONLY THREADS, CAGES AND ENGINES
+
+    function certificateSteels(int proofo, string memory object) external { 
       
         require(proofo>proof[0],"not valid Steels");
         require(f[msg.sender] == true, "you are not qualified user");
         require(timef[msg.sender]>block.timestamp, "your time of usage end");
         bubbleSteel[keccak256(abi.encodePacked(object))] = true;
-    }   
+    } 
 
     function certificateCoppers(int proofo, string memory object) external {
         require(proofo>proof[1],"not valid Coppers");
         require(g[msg.sender] == true, "you are not qualified user");
         require(timeg[msg.sender]>block.timestamp, "your time of usage end");
         bubbleCopper[keccak256(abi.encodePacked(object))] = true;
-    }   
+    }  
 
-    function certificateThreads(int proofo, string memory object) external {
-        require(proofo>proof[2],"not valid Threads");
-        require(bubbleSteel[keccak256(abi.encodePacked(object))] == true, "not found Steels");
-        require(bubbleCopper[keccak256(abi.encodePacked(object))] == true, "not found Coppers");
-        require(f[msg.sender] == true, "you are not qualified user");
+    */
+
+    function certificateThreads(uint fatt, string memory producer) external returns(string memory, uint) { //Ask for threads data - Producer and Fattura d'aquisto
         require(timef[msg.sender]>block.timestamp, "your time of usage end");
-        threads[keccak256(abi.encodePacked(object))] = true;
-    } 
+        threads[keccak256(abi.encodePacked(fatt))] = true; //the key value for the threads is now the invoice (fattura) code
+        return(producer, fatt); //this function return the producer and the invoice code - if useful
+    }
 
-    function certificateCages(int proofo, string memory object) external {
-        require(proofo>proof[3],"not valid Cages");
-        require(threads[keccak256(abi.encodePacked(object))] == true, "not found Threads");
-        require(g[msg.sender] == true || m1[msg.sender] == true, "you are not qualified user"); //sistemare
-        require(timeg[msg.sender]>block.timestamp || timem1[msg.sender]>block.timestamp, "your time of usage end"); //sistemare
-        cages[keccak256(abi.encodePacked(object))] = true;
-    } 
+    function certificateCage(uint fatt, string memory producer) external returns(string memory, uint) { //Ask for cages data - Producer and Fattura d'aquisto
+        require(timef[msg.sender]>block.timestamp, "your time of usage end");
+        cages[keccak256(abi.encodePacked(fatt))] = true;
+        return(producer, fatt); //As above
+    }
 
-    function certificateEngines(int proofo, string memory object) external {
+    function certificateEngines(int proofo, uint cage_fatt, uint thread_fatt, EU_certificate calldata cert, int temp, int ts, int fr, int Y, string memory object) external {
         require(proofo>proof[4],"not valid Cages");
-        require(cages[keccak256(abi.encodePacked(object))] == true, "not found Threads");
-        require(m1[msg.sender] == true || m2[msg.sender] == true, "you are not qualified user");//sistemare
-        require(timem1[msg.sender]>block.timestamp || timem2[msg.sender]>block.timestamp, "your time of usage end"); //sistemare
-        threads[keccak256(abi.encodePacked(object))] = true;
+        require(cages[keccak256(abi.encodePacked(thread_fatt))] == true, "cages not found"); //thread_fatt -> thread invoice id
+        require(threads[keccak256(abi.encodePacked(cage_fatt))] = true, "threads not found"); //cage_fatt -> cage invoice id
+        require(temp <= cert.Temp_classes, "Temperature class error"); //check if the tested temperature class is less then or equal to teh one defined in the certificate
+        bool check_alim = false;
+        if (ts == cert.tension && fr==cert.frequency && Y==cert.Y){ //check the parameter for the alimentation tension
+            check_alim = true;
+        }
+        require(check_alim == true, "Alimentation tension Error");
+         engines[keccak256(abi.encodePacked(object))] = true; //set as true an engine with ID = object (numero del lotto??)
     } 
 
-    function isCertificatesSteels(string memory object) view external returns(bool) {
+   /* function isCertificatesSteels(string memory object) view external returns(bool) {
         return bubbleSteel[keccak256(abi.encodePacked(object))];
     }   
 
     function isCertificatedCoppers(string memory object) view external returns(bool){
    
         return bubbleCopper[keccak256(abi.encodePacked(object))];
-    }   
+    }   */
 
     function isCertificatedThreads(string memory object) view external returns(bool){
       
@@ -167,7 +194,7 @@ contract ElectricEngine {
 
     function isCertificatedEngines(string memory object) view external returns(bool){
     
-        return threads[keccak256(abi.encodePacked(object))];
+        return engines[keccak256(abi.encodePacked(object))];
     } 
 
    function isM1() view external returns(bool) {
@@ -217,4 +244,6 @@ contract ElectricEngine {
         emit ItemsRetrieved(msg.sender, _amount);
     }*/
 }
+
+
 
