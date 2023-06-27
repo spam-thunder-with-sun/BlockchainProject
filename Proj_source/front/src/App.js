@@ -38,9 +38,10 @@ function App() {
         return "Loading..."
       }
 
-      /*const myEvent = drizzle.contracts.ElectricEngine.events.addedm1()
+      const myEvent = drizzle.contracts.ElectricEngine.events.addedm1()
       .on("data", (event) => {
         console.log("Event Data:", event.returnValues);
+        
         // Perform further actions with the event data
       })
       .on("error", (error) => {
@@ -54,7 +55,7 @@ function App() {
           //console.log("Event Data:", event.returnValues);
           // Perform further actions with the event data
         //});
-     // }*/
+     // }
 
       return (
         
