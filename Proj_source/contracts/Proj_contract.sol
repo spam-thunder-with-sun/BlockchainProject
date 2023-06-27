@@ -32,20 +32,6 @@ contract ElectricEngine {
     int[5] private proof;
     int[5] private info;
 
-    struct EU_certificate {  //information inside a EU certificate that last for 10 years
-        string model; //model of the motor
-        string EX_category; 
-        int Temp_classes; //max superficial temperature the product can reach
-        int h_axle_mm; //hight of the axle in mm
-        string lamellar_pack; //code that corrispond to a series of possible value for the lamellar pack dimension
-        string polaity; //code fro the polarity - single number or poli
-        string motor_type; 
-        int tension; 
-        int frequency;
-        int Y; 
-        //tension, frequancy and Y must be used for the alimentation tension. in some cases Y is not used, so -1 is inserted
-        string IM_code;
-    }
 
     constructor(){
 
@@ -60,7 +46,7 @@ contract ElectricEngine {
       timef[0xeaaF394C2468442eCb543d43B11326903e27e311] = time;
       certifier = 0x984765fCd218D3937E4298Dd1746b47828D5E9f8;
       owner = msg.sender;
-      setEUCertificate('xx','3G', 135, 63, 'A' ,'Poli', '3F', 230, 50, -1, 'B35'); //create a test certificate
+      
 
       // DOMANDA -- Facciamo creare i certificati europei agli utenti certificatori oppure usiamo i certificatori solo come gli utenti che controllano i singoli lotti?
 
@@ -68,12 +54,6 @@ contract ElectricEngine {
      
     }
 
-    EU_certificate testmotor; //test certifiacate - in thoery multiple certificate can be inserted for multiple products
-
-
-    function setEUCertificate(string memory model, string memory ex_cat, int tc, int h, string memory lp, string memory p, string memory mt, int t, int frq, int y, string memory code  ) private{ //create an actual EU_certificate with some possible data - 
-        testmotor = EU_certificate(model,ex_cat, tc, h, lp, p, mt, t, frq, y, code);
-    }
     
 
     function UserInfos( int8 info1, int8 info2, int8 info3, int8 info4, int8 info5) external{
@@ -160,13 +140,14 @@ contract ElectricEngine {
         return(producer, fatt); //As above
     }
 
-    function certificateEngines(int proofo, uint cage_fatt, uint thread_fatt, EU_certificate calldata cert, int temp, int ts, int fr, int Y, string memory object) external {
+setEUCertificate('xx','3G', 135, 63, 'A' ,'Poli', '3F', 230, 50, -1, 'B35'); 
+    function certificateEngines(int proofo, uint cage_fatt, uint thread_fatt, int temp, int ts, int fr, int Y, string memory object) external {
         require(proofo>proof[4],"not valid Cages");
         require(cages[keccak256(abi.encodePacked(thread_fatt))] == true, "cages not found"); //thread_fatt -> thread invoice id
         require(threads[keccak256(abi.encodePacked(cage_fatt))] = true, "threads not found"); //cage_fatt -> cage invoice id
-        require(temp <= cert.Temp_classes, "Temperature class error"); //check if the tested temperature class is less then or equal to teh one defined in the certificate
+        require(temp <= 135, "Temperature class error"); //check if the tested temperature class is less then or equal to teh one defined in the certificate (defiened when the cintract is created
         bool check_alim = false;
-        if (ts == cert.tension && fr==cert.frequency && Y==cert.Y){ //check the parameter for the alimentation tension
+        if (ts == 230 && fr==50 && Y== -1){ //check the parameter for the alimentation tension
             check_alim = true;
         }
         require(check_alim == true, "Alimentation tension Error");
