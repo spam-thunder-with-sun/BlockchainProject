@@ -163,75 +163,57 @@
           "type": "string"
         }
       ],
-      "name": "certificateSteels",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "int256",
-          "name": "proofo",
-          "type": "int256"
-        },
+       "name": "certificateThreads",
+      "outputs": [
         {
           "internalType": "string",
-          "name": "object",
           "type": "string"
+        },
+        {
+          "internalType": "uint",
+          "type": "uint"
         }
       ],
-      "name": "certificateCoppers",
-      "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "inputs": [
         {
-          "internalType": "int256",
-          "name": "proofo",
-          "type": "int256"
+          "internalType": "uint",
+          "name": "fatt",
+          "type": "uint"
         },
         {
           "internalType": "string",
-          "name": "object",
-          "type": "string"
-        }
-      ],
-      "name": "certificateThreads",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "int256",
-          "name": "proofo",
-          "type": "int256"
-        },
-        {
-          "internalType": "string",
-          "name": "object",
+          "name": "producer",
           "type": "string"
         }
       ],
       "name": "certificateCages",
-      "outputs": [],
+      "outputs": [
+        {
+          "internalType": "string",
+          "type": "string"
+        },
+        {
+          "internalType": "uint",
+          "type": "uint"
+        }
+      ],
       "stateMutability": "nonpayable",
       "type": "function"
     },
     {
       "inputs": [
         {
-          "internalType": "int256",
-          "name": "proofo",
-          "type": "int256"
+          "internalType": "uint",
+          "name": "fatt",
+          "type": "uint"
         },
         {
           "internalType": "string",
-          "name": "object",
+          "name": "producer",
           "type": "string"
         }
       ],
@@ -242,6 +224,41 @@
     },
     {
       "inputs": [
+        {
+          "internalType": "int",
+          "name": "proofo",
+          "type": "int"
+        },
+        {
+          "internalType": "uint",
+          "name": "cage_fatt",
+          "type": "uint"
+        },
+        {
+          "internalType": "uint",
+          "name": "thread_fatt",
+          "type": "uint"
+        },
+        {
+          "internalType": "int",
+          "name": "temp",
+          "type": "int"
+        },
+        {
+          "internalType": "int",
+          "name": "ts",
+          "type": "int"
+        },
+        {
+          "internalType": "int",
+          "name": "fr",
+          "type": "int"
+        },
+        {
+          "internalType": "int",
+          "name": "Y",
+          "type": "int"
+        },
         {
           "internalType": "string",
           "name": "object",
