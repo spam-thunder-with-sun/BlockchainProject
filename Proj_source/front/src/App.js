@@ -20,15 +20,24 @@ const { AccountData, ContractData, ContractForm } = newContextComponents;
 const drizzle = new Drizzle(drizzleOptions);
 
 function App() {
+/*
+NELLA FUNZIONE PER CERTIFICAR I MOTORI ELETTRICI BISOGNA DARE PROOFO COME INPUT,
+COS'è? 
 
-  
- 
+INOLTRE TESTARE SE COMPAIONO NEL POSTO GIUSTO ( E IDEALMENTE SOLO SE L?UTENTE PUO ESEGUIRE LE FUNZIONI)
+
+*/
   
   return (
     <DrizzleContext.Provider drizzle={drizzle}>
-      <h2>Are you m1?</h2>
+      <h2>INSERT THREAD DATA:</h2>
+      <ContractForm contract="ElectricalEngine" method="certificateThreads" labels={['Invoice number', 'producer']} />
+      <h2>INSERT CAGE DATA</h2>
+      <ContractForm contract="ElectricalEngine" method="certificateCages" labels={['Invoice number', 'producer']} />
+      <h2>INSERT ENGINE DATA</h2>
+      <ContractForm contract="ElectricalEngine" method="certificateEngines" labels={['proofo', 'cage invoice', 'thread invoice', 'tested temperature', 'tested tension', 'tested frequency', 'Y', 'batch id']} />
+
     <DrizzleContext.Consumer>
-    
     {drizzleContext => {
       
       
