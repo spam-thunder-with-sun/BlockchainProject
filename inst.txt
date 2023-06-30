@@ -27,7 +27,7 @@ testare funziomento contratto (in Proj_source):
  -truffle migrate
  -truffle test test/Proj_test_cerification.js
  
-Questa parte NON ancora:
+
 
  
 testare frontend (in Proj_source/front):
@@ -35,7 +35,10 @@ testare frontend (in Proj_source/front):
  -npm start (utile anche un npm install prima)
  -Appare una pagina dal browser
  -Associanti con metamask con il tuo account
- -inserisci 2 nella casella di testo per aggiungerti come m1
- -conferma l'operazione con metamask
- -poi dovrebbe apparirti "true" in "are you m1?"
+ -inserisci 6 nella casella di testo per aggiungerti come certifier
+ -poi metti due indirizzi diversi nel successive due caselle
+ -poi metti i dari per threads and cages con l'account m1 (devi connettere l'account m1 alla pagina e poi ricaricare la pagina)
+ -poi metti i dati per engine con account m2 (stessa cosa di sopra)
+ -conferma tutte le op con metamask
+ -poi submita per chiedere se quel lotto di engines con il nome che gli hai dato (object) è cerificato
 
