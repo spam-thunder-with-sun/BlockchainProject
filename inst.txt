@@ -1,7 +1,6 @@
 requisti:
  -nodejs & npm
    -truffle
-   -react
  -metamask plugin nel browser
  -ganache
 
@@ -29,7 +28,7 @@ testare funziomento contratto (in Proj_source):
  
 testare frontend (in Proj_source/front):
  -ganache deve runnare e il contratto deve essere già deployato
- -npm start
+ -npm start (utile anche un npm install prima)
  -Appare una pagina dal browser
  -Associanti con metamask con il tuo account
  -inserisci 2 nella casella di testo per aggiungerti come m1
