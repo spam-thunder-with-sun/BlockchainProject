@@ -11,11 +11,8 @@ ganache:
 
 metamask:
  -crea una nuova network indicando i dati di rete di ganache
-<<<<<<< HEAD
  -collega 3 account ganache a metamask utilizando la chiave privata che vedi associata all'account in ganache
-=======
- -aggiungi un account a metamask utilizando la chiave privata che vedi associata all'account in ganache
->>>>>>> 6859ada4433f56c42b6b58d18278b796b4748a62
+ -aggiungi un account a metamask utilizando la chiave privata che vedi associata su ganache
 
 proj_source:
 -truffle-config.js:
