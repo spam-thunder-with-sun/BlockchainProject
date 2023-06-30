@@ -6403,12 +6403,12 @@
     "5777": {
       "events": {},
       "links": {},
-      "address": "0xa8d5E023a77928Fc9DA772768485269AdB96Ac24",
-      "transactionHash": "0x6b1c97b5969a225f61e0723c0f3316600e5d25fb50adcdd2bf32e427d9d9eccb"
+      "address": "0xB342e96271FA973F3758AcBdb2C9Db3f5Fa00724",
+      "transactionHash": "0x6e373385253dff562167f16f9b9231aa25f0f92ec2966fb4ed1a695ed6b32abf"
     }
   },
   "schemaVersion": "3.4.13",
-  "updatedAt": "2023-06-26T18:58:44.373Z",
+  "updatedAt": "2023-06-30T10:37:33.445Z",
   "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",

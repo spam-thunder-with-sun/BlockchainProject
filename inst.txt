@@ -10,7 +10,7 @@ ganache:
 
 metamask:
  -crea una nuova network indicando i dati di rete di ganache
- -collega un account ganache a metamask utilizando la chiave privata che vedi associata all'account in ganache
+ -collega 3 account ganache a metamask utilizando la chiave privata che vedi associata all'account in ganache
 
 proj_source:
 -truffle-config.js:
@@ -24,7 +24,10 @@ testare funziomento contratto (in Proj_source):
  -ganache deve runnare
  -truffle compile
  -truffle migrate
- -truffle test test/Proj_test.js
+ -truffle test test/Proj_test_cerification.js
+ 
+Questa parte NON ancora:
+
  
 testare frontend (in Proj_source/front):
  -ganache deve runnare e il contratto deve essere già deployato

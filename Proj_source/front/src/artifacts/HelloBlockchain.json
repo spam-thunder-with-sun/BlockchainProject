@@ -8548,12 +8548,12 @@
     "5777": {
       "events": {},
       "links": {},
-      "address": "0x13A6F52b488FDEAC248E556E6A3f8DF0A7364988",
-      "transactionHash": "0xd9c5312c09b4c26882c2edf44ebd4de2ef209a39bee86335f1ca163169f407b9"
+      "address": "0x96A2199E70a9333460e5785018852724f3066036",
+      "transactionHash": "0x1b574a06a77c5bc5539b2155aa0271e5a379ffd21c61743b16f1ea25071250eb"
     }
   },
   "schemaVersion": "3.4.13",
-  "updatedAt": "2023-06-26T18:58:43.572Z",
+  "updatedAt": "2023-06-30T10:37:32.841Z",
   "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",
