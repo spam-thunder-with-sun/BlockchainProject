@@ -1,7 +1,7 @@
 requisti:
  -nodejs & npm
    -truffle
-   -react-scripts
+   -react
  -metamask plugin nel browser
  -ganache
 
