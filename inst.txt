@@ -1,7 +1,9 @@
 requisti:
- -nodejs
- -npm
+ -nodejs & npm
+   -truffle
+   -react-scripts
  -metamask plugin nel browser
+ -ganache
 
 ganache:
 -crea un workspace
@@ -10,12 +12,11 @@ ganache:
 
 metamask:
  -crea una nuova network indicando i dati di rete di ganache
- -collega un account ganache a metamask utilizando la chiave privata che vedi associata all'account in ganache
+ -aggiungi un account a metamask utilizando la chiave privata che vedi associata all'account in ganache
 
 proj_source:
 -truffle-config.js:
  -metti l'host, la porta e il network id indicato in ganache
- 
  
 il contratto del progetto è: "Proj_contract.sol"
 il frontend del progetto è: "front/src/App.js"
