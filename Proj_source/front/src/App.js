@@ -19,9 +19,10 @@ const { AccountData, ContractData, ContractForm } = newContextComponents;
 
 const drizzle = new Drizzle(drizzleOptions);
 
-function lotCert(lotto){
+function lotCert(){
   var state = drizzle.store.getState();
-
+  var lotto = document.getElementById('lot').value;
+  
   // If Drizzle is initialized (and therefore web3, accounts and contracts), continue.
   if (state.drizzleStatus.initialized) {
     
@@ -33,10 +34,11 @@ function lotCert(lotto){
    
   }
 
-// If Drizzle isn't initialized, display some loading indication.
-
+  
 
 }
+
+    
 
 
 function App() {
@@ -133,7 +135,7 @@ INOLTRE TESTARE SE COMPAIONO NEL POSTO GIUSTO ( E IDEALMENTE SOLO SE L?UTENTE PU
         )
       }}
   </DrizzleContext.Consumer>
-  <h2>Certificate threads</h2>
+  <h2>Certify threads</h2>
   <DrizzleContext.Consumer>
     
     {drizzleContext => {
@@ -152,7 +154,7 @@ INOLTRE TESTARE SE COMPAIONO NEL POSTO GIUSTO ( E IDEALMENTE SOLO SE L?UTENTE PU
         )
       }}
   </DrizzleContext.Consumer>
-  <h2>Certificate cages</h2>
+  <h2>Certify cages</h2>
   <DrizzleContext.Consumer>
     
     {drizzleContext => {
@@ -191,6 +193,8 @@ INOLTRE TESTARE SE COMPAIONO NEL POSTO GIUSTO ( E IDEALMENTE SOLO SE L?UTENTE PU
         )
       }}
   </DrizzleContext.Consumer>
+  
+
   <h2>Verify if your lotto is certified</h2>
   <form>
       <input id="lot" type="text" name="lott" placeholder="lott" ></input>

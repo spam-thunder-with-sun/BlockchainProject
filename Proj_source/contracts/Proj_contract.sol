@@ -163,7 +163,7 @@ contract ElectricEngine {
 
     function certificateEngines(uint cage_fatt, uint thread_fatt, int temp, int ts, int fr, int Y, string memory object) external {
         require(m2[msg.sender] == true, "you are not qualified user");//sistemare
-        require(timem2[msg.sender]>block.timestamp, "your time of usage end"); //sistemare
+        //require(timem2[msg.sender]>block.timestamp, "your time of usage end"); //sistemare
         require(cages[keccak256(abi.encodePacked(cage_fatt))] == true, "cages not found"); //thread_fatt -> thread invoice id
         require(threads[keccak256(abi.encodePacked(thread_fatt))] = true, "threads not found"); //cage_fatt -> cage invoice id
         require(temp <= 135, "Temperature class error"); //check if the tested temperature class is less then or equal to teh one defined in the certificate (defiened when the cintract is created)
