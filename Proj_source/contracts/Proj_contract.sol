@@ -44,10 +44,10 @@ contract ElectricEngine {
       m2[0xCCf44CeA3140c0253D845D04973bC0D0E5eED163] = true;
       f[0x10CdeAE4C0d04aD512E017E3F7d236a463c578bB] = true;
       g[0xeaaF394C2468442eCb543d43B11326903e27e311] = true;
-      timem1[0x984765fCd218D3937E4298Dd1746b47828D5E9f8] = SafeMath.add(block.timestamp, 40);
-      timem2[0xCCf44CeA3140c0253D845D04973bC0D0E5eED163] = SafeMath.add(block.timestamp, 40);
-      timeg[0x10CdeAE4C0d04aD512E017E3F7d236a463c578bB] = SafeMath.add(block.timestamp, 40);
-      timef[0xeaaF394C2468442eCb543d43B11326903e27e311] = SafeMath.add(block.timestamp, 40);
+      timem1[0x984765fCd218D3937E4298Dd1746b47828D5E9f8] = SafeMath.add(block.number, 40);
+      timem2[0xCCf44CeA3140c0253D845D04973bC0D0E5eED163] = SafeMath.add(block.number, 40);
+      timeg[0x10CdeAE4C0d04aD512E017E3F7d236a463c578bB] = SafeMath.add(block.number, 40);
+      timef[0xeaaF394C2468442eCb543d43B11326903e27e311] = SafeMath.add(block.number, 40);
       certifier = 0x984765fCd218D3937E4298Dd1746b47828D5E9f8;*/
       owner = msg.sender;
       
@@ -91,8 +91,8 @@ contract ElectricEngine {
 
         //require(infop>info[0],"you aren't a m1");
         require(certifier == msg.sender, "you are not a certifier");
-        require(timem1[ut1]<block.timestamp,"you have still time");
-        timem1[ut1] = SafeMath.add(block.timestamp, 40);
+        require(timem1[ut1]<block.number,"you have still time");
+        timem1[ut1] = SafeMath.add(block.number, 40);
         m1[ut1] = true;
         emit addedm1(ut1);
     } 
@@ -101,8 +101,8 @@ contract ElectricEngine {
 
         //require(infop>info[1],"you aren't a m2");
         require(certifier == msg.sender, "you are not a certifier");
-        require(timem2[ut2]<block.timestamp,"you have still time");
-        timem2[ut2] = SafeMath.add(block.timestamp, 40);
+        require(timem2[ut2]<block.number,"you have still time");
+        timem2[ut2] = SafeMath.add(block.number, 40);
         m2[ut2] = true;
         emit addedm2(ut2);
     } 
@@ -132,14 +132,14 @@ contract ElectricEngine {
       
         require(proofo>proof[0],"not valid Steels");
         require(f[msg.sender] == true, "you are not qualified user");
-        require(timef[msg.sender]>block.timestamp, "your time of usage end");
+        require(timef[msg.sender]>block.number, "your time of usage end");
         bubbleSteel[keccak256(abi.encodePacked(object))] = true;
     } 
 
     function certificateCoppers(int proofo, string memory object) external {
         require(proofo>proof[1],"not valid Coppers");
         require(g[msg.sender] == true, "you are not qualified user");
-        require(timeg[msg.sender]>block.timestamp, "your time of usage end");
+        require(timeg[msg.sender]>block.number, "your time of usage end");
         bubbleCopper[keccak256(abi.encodePacked(object))] = true;
     }  
 
@@ -147,7 +147,7 @@ contract ElectricEngine {
 
     function certificateThreads(uint fatt, string memory producer) external { //Ask for threads data - Producer and Fattura d'aquisto
         require(m1[msg.sender] == true, "you are not qualified user");//sistemare
-        require(timem1[msg.sender]>block.timestamp, "your time of usage end");
+        require(timem1[msg.sender]>block.number, "your time of usage end");
         threads[keccak256(abi.encodePacked(fatt))] = true; //the key value for the threads is now the invoice (fattura) code
         emit certThreads(fatt,msg.sender,producer);
         //return(producer, fatt); //this function return the producer and the invoice code - if useful
@@ -155,7 +155,7 @@ contract ElectricEngine {
 
     function certificateCage(uint fatt, string memory producer) external { //Ask for cages data - Producer and Fattura d'aquisto
         require(m1[msg.sender] == true, "you are not qualified user");//sistemare
-        require(timem1[msg.sender]>block.timestamp, "your time of usage end");
+        require(timem1[msg.sender]>block.number, "your time of usage end");
         cages[keccak256(abi.encodePacked(fatt))] = true;
         emit certCages(fatt,msg.sender,producer);
         //return(producer, fatt); //As above
@@ -163,7 +163,7 @@ contract ElectricEngine {
 
     function certificateEngines(uint cage_fatt, uint thread_fatt, int temp, int ts, int fr, int Y, string memory object) external {
         require(m2[msg.sender] == true, "you are not qualified user");//sistemare
-        //require(timem2[msg.sender]>block.timestamp, "your time of usage end"); //sistemare
+        require(timem2[msg.sender]>block.number, "your time of usage end"); //sistemare
         require(cages[keccak256(abi.encodePacked(cage_fatt))] == true, "cages not found"); //thread_fatt -> thread invoice id
         require(threads[keccak256(abi.encodePacked(thread_fatt))] = true, "threads not found"); //cage_fatt -> cage invoice id
         require(temp <= 135, "Temperature class error"); //check if the tested temperature class is less then or equal to teh one defined in the certificate (defiened when the cintract is created)
