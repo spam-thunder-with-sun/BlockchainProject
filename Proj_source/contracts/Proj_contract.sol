@@ -5,37 +5,37 @@ import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 
 contract ElectricEngine {
 
-    mapping(address => bool) private m1;
-    mapping(address => bool) private m2;
+    mapping(address => bool) private m1; //producer that certifies threads and cages
+    mapping(address => bool) private m2; //user that test engine
     //mapping(address => bool) private g;
     //mapping(address => bool) private f;
     address private certifier; //who specified the parameter for the verification.
 
-    mapping(address => uint256) private timem1;
-    mapping(address => uint256) private timem2;
+    mapping(address => uint256) private timem1;//block when the service ends for m1
+    mapping(address => uint256) private timem2;//block when the service ends for m1
     //mapping(address => uint256) private timeg;
     //mapping(address => uint256) private timef;
 
-    address private owner;
+    //address private owner;
 
     //mapping(bytes32 => bool) private bubbleCopper;
     //mapping(bytes32 => bool) private bubbleSteel;
-    mapping(bytes32 => bool) private cages;
+    mapping(bytes32 => bool) private cages; 
     mapping(bytes32 => bool) private engines;
     mapping(bytes32 => bool) private threads;
 
 
-    
+    //Events with information goal
     event addedm1(address indexed user);
     event addedm2(address indexed user);
     //event addedf(address indexed user);
     //event addedg(address indexed user);
-    event certThreads(uint fatt, address indexed user,string producer);
-    event certCages(uint fatt, address indexed user,string producer);
-    event certEngines(string lot, address indexed user);
+    event certThreads(uint indexed fatt, address indexed user,string producer);
+    event certCages(uint indexed fatt, address indexed user,string producer);
+    event certEngines(string indexed lot, address indexed user);
     
     //int[5] private proof;
-    int[5] private info;
+    //int[5] private info;
 
 
     constructor(){
@@ -49,7 +49,8 @@ contract ElectricEngine {
       timeg[0x10CdeAE4C0d04aD512E017E3F7d236a463c578bB] = SafeMath.add(block.number, 40);
       timef[0xeaaF394C2468442eCb543d43B11326903e27e311] = SafeMath.add(block.number, 40);
       certifier = 0x984765fCd218D3937E4298Dd1746b47828D5E9f8;*/
-      owner = msg.sender;
+      //owner = msg.sender;
+      certifier = msg.sender;
       
 
       // DOMANDA -- Facciamo creare i certificati europei agli utenti certificatori oppure usiamo i certificatori solo come gli utenti che controllano i singoli lotti?
@@ -87,13 +88,14 @@ contract ElectricEngine {
 
     }
 
-    function addm1(address ut1) external {
+    function addm1(address  ut1) external { 
 
         //require(infop>info[0],"you aren't a m1");
         require(certifier == msg.sender, "you are not a certifier");
+        require(certifier != ut1, "A ceritifier cannot be also a M1");
         require(timem1[ut1]<block.number,"you have still time");
-        timem1[ut1] = SafeMath.add(block.number, 40);
-        m1[ut1] = true;
+        timem1[ut1] = SafeMath.add(block.number, 40); //Assign to the producer the block where its service ends
+        m1[ut1] = true; //ut1 is a producer of cages and threads
         emit addedm1(ut1);
     } 
 
@@ -101,9 +103,10 @@ contract ElectricEngine {
 
         //require(infop>info[1],"you aren't a m2");
         require(certifier == msg.sender, "you are not a certifier");
+        require(certifier != ut2, "A ceritifier cannot be also a M1");
         require(timem2[ut2]<block.number,"you have still time");
-        timem2[ut2] = SafeMath.add(block.number, 40);
-        m2[ut2] = true;
+        timem2[ut2] = SafeMath.add(block.number, 40); //Assign to the producer the block where its service ends
+        m2[ut2] = true; //ut2 is a engine tester
         emit addedm2(ut2);
     } 
 
@@ -145,32 +148,33 @@ contract ElectricEngine {
 
     */
 
-    function certificateThreads(uint fatt, string memory producer) external { //Ask for threads data - Producer and Fattura d'aquisto
-        require(m1[msg.sender] == true, "you are not qualified user");//sistemare
+    function certificateThreads(uint fatt, string memory producer) external { //Ask threads data (Producer and Fattura d'aquisto) to certidicate the threads
+        require(m1[msg.sender] == true, "you are not qualified user");
         require(timem1[msg.sender]>block.number, "your time of usage end");
-        threads[keccak256(abi.encodePacked(fatt))] = true; //the key value for the threads is now the invoice (fattura) code
+        threads[keccak256(abi.encodePacked(fatt))] = true; //the key value for the threads is now the invoice (fattura) code.
         emit certThreads(fatt,msg.sender,producer);
         //return(producer, fatt); //this function return the producer and the invoice code - if useful
     }
 
-    function certificateCage(uint fatt, string memory producer) external { //Ask for cages data - Producer and Fattura d'aquisto
-        require(m1[msg.sender] == true, "you are not qualified user");//sistemare
+    function certificateCage(uint fatt, string memory producer) external { //Ask for cages data (Producer and Fattura d'aquisto) to certificate the cages
+        require(m1[msg.sender] == true, "you are not qualified user");
         require(timem1[msg.sender]>block.number, "your time of usage end");
-        cages[keccak256(abi.encodePacked(fatt))] = true;
+        cages[keccak256(abi.encodePacked(fatt))] = true;//the key value for the threads is now the invoice (fattura) code.
         emit certCages(fatt,msg.sender,producer);
         //return(producer, fatt); //As above
     }
 
     function certificateEngines(uint cage_fatt, uint thread_fatt, int temp, int ts, int fr, int Y, string memory object) external {
-        require(m2[msg.sender] == true, "you are not qualified user");//sistemare
-        require(timem2[msg.sender]>block.number, "your time of usage end"); //sistemare
-        require(cages[keccak256(abi.encodePacked(cage_fatt))] == true, "cages not found"); //thread_fatt -> thread invoice id
-        require(threads[keccak256(abi.encodePacked(thread_fatt))] = true, "threads not found"); //cage_fatt -> cage invoice id
+        require(m2[msg.sender] == true, "you are not qualified user");
+        require(timem2[msg.sender]>block.number, "your time of usage end"); 
+        require(cages[keccak256(abi.encodePacked(cage_fatt))] == true, "cages not found"); //cage_fatt -> cage invoice//thread_fatt -> thread invoice id
+        require(threads[keccak256(abi.encodePacked(thread_fatt))] == true, "threads not found"); //thread_fatt -> thread invoice id
         require(temp <= 135, "Temperature class error"); //check if the tested temperature class is less then or equal to teh one defined in the certificate (defiened when the cintract is created)
         if (ts != 230 && fr != 50 && Y != -1){ //check the parameter for the alimentation tension
             revert("Alimentation tension Error");
         }
-        engines[keccak256(abi.encodePacked(object))] = true; //set as true an engine with ID = object (numero del lotto??)
+        engines[keccak256(abi.encodePacked(object))] = true; //set as true an engine with ID lotto, azienda:number.
+        //segnare i due pezzi cages e thread come non certificati !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         emit certEngines(object,msg.sender);
     } 
 
@@ -183,7 +187,7 @@ contract ElectricEngine {
         return bubbleCopper[keccak256(abi.encodePacked(object))];
     }   */
 
-    function isCertificatedThreads(uint fatt) view external returns(bool){
+    function isCertificatedThreads(uint fatt) view external returns(bool){ 
       
         return threads[keccak256(abi.encodePacked(fatt))];
     } 

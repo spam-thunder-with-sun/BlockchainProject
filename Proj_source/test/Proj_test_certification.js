@@ -1,4 +1,7 @@
+//Test to certificate a lotto of engines with a producer and a tester
+
 const project = artifacts.require("ElectricEngine");
+
 
 contract("ElectricEngine", accounts => {
   it("certification process", async () => {
