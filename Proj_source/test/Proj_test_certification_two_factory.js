@@ -15,11 +15,11 @@ contract("ElectricEngine", accounts => {
 
     //await projectinstance.addG(6, {from: accounts[2]});
 
-    await projectinstance.addm2('0xCCf44CeA3140c0253D845D04973bC0D0E5eED163', {from: accounts[0]});
+    await projectinstance.addm2(accounts[1], {from: accounts[0]});
 
-    await projectinstance.addm1('0x10CdeAE4C0d04aD512E017E3F7d236a463c578bB', {from: accounts[0]});
+    await projectinstance.addm1(accounts[3], {from: accounts[0]});
 
-    await projectinstance.addm1('0xeaaF394C2468442eCb543d43B11326903e27e311', {from: accounts[0]});
+    await projectinstance.addm1(accounts[2], {from: accounts[0]});
 
 
     await projectinstance.certificateThreads(4,"azienda1",{from: accounts[3]});
