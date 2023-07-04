@@ -1,24 +1,25 @@
-//import React, { useEffect } from 'react'
-//import HelloBlockchain from './artifacts/HelloBlockchain.json'
-import ElectricEngine from './artifacts/ElectricEngine.json'
-import { DrizzleContext} from '@drizzle/react-plugin';
+//PROJECT FRONTEND
+
+
+import ElectricEngine from './artifacts/ElectricEngine.json' //import project contract
+
+//import drizzle components
+import { DrizzleContext} from '@drizzle/react-plugin'; 
 import { Drizzle } from "@drizzle/store";
 import { newContextComponents } from "@drizzle/react-components";
 
 
 
-
+//Set contract in drizzle option
 const drizzleOptions = {
   contracts: [ElectricEngine],
-  events: {
-    MyContract: ["addedm1"],
-  },
 };
 
 const { AccountData, ContractData, ContractForm } = newContextComponents;
 
 const drizzle = new Drizzle(drizzleOptions);
 
+//Function to ask if the engines lot is certified
 function lotCert(){
   var state = drizzle.store.getState();
   var lotto = document.getElementById('lot').value;
@@ -26,11 +27,12 @@ function lotCert(){
   // If Drizzle is initialized (and therefore web3, accounts and contracts), continue.
   if (state.drizzleStatus.initialized) {
     
-    // Declare this call to be cached and synchronized. We'll receive the store key for recall.
+    //Call contract's method
     const dataKey = drizzle.contracts.ElectricEngine.methods.isCertificatedEngines(lotto).call();
+    //Visualize the answer
     dataKey.then(value => { document.getElementById('risp').innerHTML = value;})
     
-    // Use the dataKey to display data from the store.
+    
    
   }
 
@@ -40,19 +42,15 @@ function lotCert(){
 
     
 
-
+//Web app function
 function App() {
-/*
-NELLA FUNZIONE PER CERTIFICAR I MOTORI ELETTRICI BISOGNA DARE PROOFO COME INPUT,
-COS'è? 
 
-INOLTRE TESTARE SE COMPAIONO NEL POSTO GIUSTO ( E IDEALMENTE SOLO SE L?UTENTE PUO ESEGUIRE LE FUNZIONI)
-
-*/
   
   return (
+
     <DrizzleContext.Provider drizzle={drizzle}>
     
+
     <h2>Set you as certifier</h2>
     <DrizzleContext.Consumer>
     
@@ -91,7 +89,7 @@ INOLTRE TESTARE SE COMPAIONO NEL POSTO GIUSTO ( E IDEALMENTE SOLO SE L?UTENTE PU
       }
 
       return (
-        
+        //Call contract's method
         <ContractForm drizzle={drizzle} contract='ElectricEngine' method='addm1'/>
         )
       }}
@@ -130,7 +128,7 @@ INOLTRE TESTARE SE COMPAIONO NEL POSTO GIUSTO ( E IDEALMENTE SOLO SE L?UTENTE PU
      // }
 
       return (
-        
+        //Call contract's method
         <ContractForm drizzle={drizzle} contract='ElectricEngine' method='addm2'/>
         )
       }}
@@ -168,7 +166,7 @@ INOLTRE TESTARE SE COMPAIONO NEL POSTO GIUSTO ( E IDEALMENTE SOLO SE L?UTENTE PU
       }
 
       return (
-        
+        //Call contract's method
         <ContractForm drizzle={drizzle} contract='ElectricEngine' method='certificateCage'/>
         )
       }}
@@ -188,7 +186,7 @@ INOLTRE TESTARE SE COMPAIONO NEL POSTO GIUSTO ( E IDEALMENTE SOLO SE L?UTENTE PU
       }
 
       return (
-        
+        //Call contract's method
         <ContractForm drizzle={drizzle} contract='ElectricEngine' method='certificateEngines'/>
         )
       }}

@@ -1,11 +1,13 @@
-//Test to certificate a lotto of engines with a producer and a tester
+//Test certificate with a producer and a tester
 
 const project = artifacts.require("ElectricEngine");
-
+const assert = require("chai").assert;
+const truffleAssert = require('truffle-assertions');
 
 contract("ElectricEngine", accounts => {
-  it("certification process", async () => {
-    const projectinstance = await project.deployed();
+
+  before(async () => {
+    projectinstance = await project.deployed();
 
     await projectinstance.addcertifier(6, {from: accounts[0]});
 
@@ -18,7 +20,9 @@ contract("ElectricEngine", accounts => {
     await projectinstance.addm2(accounts[1], {from: accounts[0]});
 
     await projectinstance.addm1(accounts[3], {from: accounts[0]});
+  });
 
+  it("certification process", async () => {
     
 
 
@@ -36,4 +40,14 @@ contract("ElectricEngine", accounts => {
     
     assert.equal(ceritified_engine, true, "The engine is not certified.");
   });
+
+  it("m2 cannot certifiate threads and cages", async () => {
+    const projectinstance = await project.deployed();
+
+    await truffleAssert.reverts(
+      projectinstance.certificateThreads(4,"azienda1",{from: accounts[1]}),
+        "you are not qualified user"
+    );
+});
+
 });

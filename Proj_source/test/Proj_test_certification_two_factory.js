@@ -1,4 +1,4 @@
-//Test to certificate a lotto of engines with two producers and a testers
+//Test certificate  with two producers and a testers
 
 const project = artifacts.require("ElectricEngine");
 
