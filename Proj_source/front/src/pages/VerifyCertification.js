@@ -1,12 +1,11 @@
 import React from 'react';
-import Navbar from './Navbar';
+import MainLayout from '../layout/MainLayout';
 
 function VerifyCertification() {
     return (
-      <div>
-        <Navbar />
-        <h1>Verify Certification</h1>
-      </div>
+        <MainLayout>
+            <h1>VerifyCertification</h1>
+        </MainLayout>
     );
 }
 

@@ -4,13 +4,14 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
+import reportWebVitals from './reportWebVitals';
 
 
 import './index.css';
+
 import App from './App';
-import reportWebVitals from './reportWebVitals';
-import VerifyCertification from './pages/VerifyCertification';
 import Home from './pages/Home';
+import VerifyCertification from './pages/VerifyCertification';
 
 const router = createBrowserRouter([
   {
@@ -21,7 +22,6 @@ const router = createBrowserRouter([
     path: "/verify",
     element: <VerifyCertification />,
   },
-
   {
     path: "/old",
     element: <App />,
