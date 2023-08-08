@@ -30,7 +30,7 @@ contract("ElectricEngine", accounts => {
 
     await projectinstance.certificateCage(5,"azienda2",{from: accounts[3]});
 
-    await projectinstance.certificateEngines(5, 4, 130, 230, 50, -1, "lotto1",{from: accounts[1]});
+    await projectinstance.certificateEngines(5, 4, 130, 230, 55, -1, "lotto1",{from: accounts[1]});
 
 
 
@@ -48,6 +48,20 @@ contract("ElectricEngine", accounts => {
       projectinstance.certificateThreads(4,"azienda1",{from: accounts[1]}),
         "you are not qualified user"
     );
-});
+  });
+
+  it("wrong test data", async () => {
+
+    await projectinstance.certificateThreads(4,"azienda3",{from: accounts[3]});
+
+    await projectinstance.certificateCage(5,"azienda4",{from: accounts[3]});
+
+    await truffleAssert.reverts(
+      projectinstance.certificateEngines(5, 4, 130, 231, 55, 6, "lotto1",{from: accounts[1]}), 
+        "Alimentation tension Error"
+    );
+
+    
+  });
 
 });
