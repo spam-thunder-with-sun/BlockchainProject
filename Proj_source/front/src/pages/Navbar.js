@@ -6,7 +6,7 @@ function Navbar() {
     return (
         <div className='navbar'>
             <div className='navbar-logo'>
-                Funestovento
+                Certification Engine Group
             </div>
             <ul className='navbar-menu'>
                 <li><Link to="/">Home</Link></li>

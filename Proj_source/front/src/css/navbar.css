@@ -2,13 +2,13 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #1a1a1a;
-    padding: 10px 20px;
+    padding: 20px 30px;
     margin-bottom: 20px;
+    background-color: rgb(34, 40, 49);
+    color: rgb(238, 238, 238);
 }
 
 .navbar-logo {
-    color: white;
     font-size: 20px;
 }
 
@@ -22,5 +22,4 @@
 
 .navbar-menu li a{
     text-decoration: none;
-    color: white;
 }
