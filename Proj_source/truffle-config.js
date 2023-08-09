@@ -6,8 +6,8 @@ module.exports = {
   networks: {
     development: {
      host: "127.0.0.1",
-     port: 1025,
-     network_id: "69"
+     port: 1337,
+     network_id: "1337"
     },
     dashboard: {
     }
