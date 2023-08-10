@@ -26,7 +26,7 @@ function Admin() {
                                 Set your account as a certifier
                             </h1>
                             <br></br>
-                            <p className="">Please insert the key of your account and click on the button</p>
+                            <p className="">Please insert the key of your account and click on the button - Da rimuovere</p>
                             <p className="text-center font-bold" id="responce">&nbsp;</p>
                             <div className="">
                                 <DrizzleContext.Consumer>
