@@ -1,14 +1,10 @@
 //PROJECT FRONTEND
-
-
 import ElectricEngine from './artifacts/ElectricEngine.json' //import project contract
 
 //import drizzle components
 import { DrizzleContext} from '@drizzle/react-plugin'; 
 import { Drizzle } from "@drizzle/store";
 import { newContextComponents } from "@drizzle/react-components";
-
-
 
 //Set contract in drizzle option
 const drizzleOptions = {
@@ -31,32 +27,17 @@ function lotCert(){
     const dataKey = drizzle.contracts.ElectricEngine.methods.isCertificatedEngines(lotto).call();
     //Visualize the answer
     dataKey.then(value => { document.getElementById('risp').innerHTML = value;})
-    
-    
-   
   }
-
-  
-
 }
-
-    
 
 //Web app function
 function App() {
-
-  
   return (
-
     <DrizzleContext.Provider drizzle={drizzle}>
-    
-
     <h2>Set you as certifier</h2>
     <DrizzleContext.Consumer>
     
     {drizzleContext => {
-      
-      
       const {drizzle, drizzleState, initialized} = drizzleContext;
       
       if(!initialized) {
