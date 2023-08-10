@@ -55,13 +55,8 @@ function VerifyCertification() {
 export default VerifyCertification;
 
 //Set contract in drizzle option
-const drizzleOptions =
-{
-    contracts: [ElectricEngine],
-};
-
+const drizzleOptions = {contracts: [ElectricEngine],};
 const { AccountData, ContractData, ContractForm } = newContextComponents;
-
 const drizzle = new Drizzle(drizzleOptions);
 
 //Function to ask if the engines lot is certified
@@ -103,6 +98,4 @@ function verifyLotCert()
 
         console.log("Generic error");
     }
-
-    
 }

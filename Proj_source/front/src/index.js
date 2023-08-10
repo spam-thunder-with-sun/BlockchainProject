@@ -12,6 +12,9 @@ import './index.css';
 import App from './App';
 import Home from './pages/Home';
 import VerifyCertification from './pages/VerifyCertification';
+import AboutUs from './pages/AboutUs';
+import Admin from './pages/Admin';
+import CreateMotor from './pages/CreateMotor';
 
 const router = createBrowserRouter([
   {
@@ -19,8 +22,21 @@ const router = createBrowserRouter([
     element: <Home />,
   },
   {
-    path: "/verify",
+    path: "/verifycertification",
     element: <VerifyCertification />,
+  },
+  {
+    path: "/createmotor",
+    element: <CreateMotor />,
+  },
+  {
+    path: "/aboutus",
+    element: <AboutUs />,
+  },
+
+  {
+    path: "/admin",
+    element: <Admin />,
   },
   {
     path: "/old",
