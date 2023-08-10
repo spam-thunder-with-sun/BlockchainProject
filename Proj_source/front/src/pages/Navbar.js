@@ -10,8 +10,9 @@ function Navbar() {
             </div>
             <ul className='navbar-menu'>
                 <li><Link to="/">Home</Link></li>
-                <li><Link to="/verify">Verify</Link></li>
+                <li><Link to="/verify">Verify certification</Link></li>
                 <li><Link to="/old">Old</Link> </li>
+                <li><Link to="/aboutus">About Us</Link> </li>
             </ul>
         </div>
     )
