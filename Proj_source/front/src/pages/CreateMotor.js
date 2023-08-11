@@ -14,6 +14,55 @@ import Navbar from './Navbar';
 import './../index.css';
 import './../css/form.css';
 
+//Set contract in drizzle option
+const drizzleOptions = { contracts: [ElectricEngine], };
+const { AccountData, ContractData, ContractForm } = newContextComponents;
+const drizzle = new Drizzle(drizzleOptions);
+
+//Function to add m1 and m2
+function add_m(item) {
+    var state = drizzle.store.getState();
+    var lotto = document.getElementById(item + "_input");
+    var lotto_input = lotto.value;
+    var success = false;
+
+    // If Drizzle is initialized (and therefore web3, accounts and contracts), continue.
+    if (lotto_input !== "" && lotto_input !== null && lotto_input !== undefined && state.drizzleStatus.initialized) {
+        try {
+            if (item == "m1") {
+                drizzle.contracts.ElectricEngine.methods.addm1(lotto_input).send();
+                success = true;
+            }
+            else if (item == "m2") {
+                drizzle.contracts.ElectricEngine.methods.addm2(lotto_input).send();
+                success = true;
+            }
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    if (success) 
+    {
+        lotto.style.borderColor = "green";
+
+
+
+        //textResponce.style.color = "green";
+    }
+    else 
+    {
+        lotto.style.borderColor = "red";
+    }
+
+    /*
+    setTimeout((item) => {
+        document.getElementById(item + "_input").style.borderColor = "black";
+      }, 3000);
+      */
+}
+
 function CreateMotor() {
     return (
         <div>
@@ -29,123 +78,13 @@ function CreateMotor() {
                             <p className="">Todo</p>
                             <p className="text-center font-bold" id="responce">&nbsp;</p>
                             <div className="">
-                                <h2>Add m1</h2>
-                                <DrizzleContext.Consumer>
-
-                                    {drizzleContext => {
-
-                                        //console.log(drizzleContext)
-                                        const { drizzle, drizzleState, initialized } = drizzleContext;
-
-
-                                        if (!initialized) {
-                                            return "Loading..."
-                                        }
-
-                                        return (
-                                            //Call contract's method
-                                            <ContractForm drizzle={drizzle} contract='ElectricEngine' method='addm1' />
-                                        )
-                                    }}
-                                </DrizzleContext.Consumer>
-
-                                <h2>Add m2</h2>
-                                <DrizzleContext.Consumer>
-
-                                    {drizzleContext => {
-
-                                        //console.log(drizzleContext)
-                                        const { drizzle, drizzleState, initialized } = drizzleContext;
-
-
-                                        if (!initialized) {
-                                            return "Loading..."
-                                        }
-
-                                        //const myEvent = drizzle.contracts.ElectricEngine.events.addedm1()
-                                        //.on("change", (event) => {
-                                        // console.log("Event Data:", event.returnValues);
-
-                                        // Perform further actions with the event data
-                                        // })
-                                        //.on("error", (error) => {
-                                        //console.error("Event Error:", error);
-                                        // Handle event error
-                                        //});
-                                        //console.log(myEvent);
-                                        //const events = drizzleState.events[myEvent];
-                                        //if (events) {
-                                        //events.forEach((event) => {
-                                        //console.log("Event Data:", event.returnValues);
-                                        // Perform further actions with the event data
-                                        //});
-                                        // }
-
-                                        return (
-                                            //Call contract's method
-                                            <ContractForm drizzle={drizzle} contract='ElectricEngine' method='addm2' />
-                                        )
-                                    }}
-                                </DrizzleContext.Consumer>
-                                <h2>Certify threads</h2>
-                                <DrizzleContext.Consumer>
-
-                                    {drizzleContext => {
-
-                                        //console.log(drizzleContext)
-                                        const { drizzle, drizzleState, initialized } = drizzleContext;
-
-
-                                        if (!initialized) {
-                                            return "Loading..."
-                                        }
-
-                                        return (
-
-                                            <ContractForm drizzle={drizzle} contract='ElectricEngine' method='certificateThreads' />
-                                        )
-                                    }}
-                                </DrizzleContext.Consumer>
-                                <h2>Certify cages</h2>
-                                <DrizzleContext.Consumer>
-
-                                    {drizzleContext => {
-
-                                        //console.log(drizzleContext)
-                                        const { drizzle, drizzleState, initialized } = drizzleContext;
-
-
-                                        if (!initialized) {
-                                            return "Loading..."
-                                        }
-
-                                        return (
-                                            //Call contract's method
-                                            <ContractForm drizzle={drizzle} contract='ElectricEngine' method='certificateCage' />
-                                        )
-                                    }}
-                                </DrizzleContext.Consumer>
-
-                                <h2>Test engine</h2>
-                                <DrizzleContext.Consumer>
-
-                                    {drizzleContext => {
-
-                                        //console.log(drizzleContext)
-                                        const { drizzle, drizzleState, initialized } = drizzleContext;
-
-
-                                        if (!initialized) {
-                                            return "Loading..."
-                                        }
-
-                                        return (
-                                            //Call contract's method
-                                            <ContractForm drizzle={drizzle} contract='ElectricEngine' method='certificateEngines' />
-                                        )
-                                    }}
-                                </DrizzleContext.Consumer>
-
+                                <label htmlFor="m1_input" className="">Add m1</label>
+                                <div className="pb-4 space-x-4 hidden sm:flex">
+                                    <input
+                                        className="border-2 border-gray-500 p-2 rounded-md w-1/2 focus:border-[#393E46] focus:ring-[#393E46] w-5/6"
+                                        type="text" id="m1_input" placeholder="M1 number" />
+                                    <button type="button" onClick={add_m.bind(this, "m1")} className="bg-teal text-sm rounded-lg px-4 py-3 text-[#EEEEEE] w-1/6 ml-1">Go!</button>
+                                </div>
                             </div>
                         </div>
                     </form>
@@ -156,8 +95,3 @@ function CreateMotor() {
 }
 
 export default CreateMotor;
-
-//Set contract in drizzle option
-const drizzleOptions = { contracts: [ElectricEngine], };
-const { AccountData, ContractData, ContractForm } = newContextComponents;
-const drizzle = new Drizzle(drizzleOptions);
