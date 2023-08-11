@@ -69,34 +69,34 @@ contract ElectricPump {
         emit certBody(fatt,msg.sender,producer);
     }
 
-    function certificatePump(uint body_fatt, uint engine_fatt, int power, int voltage, int maxvoltage, int t, int freq, int maxspeed, int dens, maxdepth, int temp, string memory object) external {
+    function certificatePump(uint body_fatt, uint engine_fatt, int power, int voltage, int maxvoltage, int t, int freq, int maxspeed, int dens, int maxdepth, int temp, string memory object) external {
         require(m2[msg.sender] == true, "you are not qualified user");
         require(timem2[msg.sender]>block.number, "your time of usage end"); 
-        require(cages[keccak256(abi.encodePacked(body_fatt))] == true, "cages not found"); //body_fatt -> body invoice
-        require(threads[keccak256(abi.encodePacked(engine_fatt))] == true, "threads not found"); //engine_fatt -> engine invoice id
+        require(body[keccak256(abi.encodePacked(body_fatt))] == true, "cages not found"); //body_fatt -> body invoice
+        require(engine[keccak256(abi.encodePacked(engine_fatt))] == true, "threads not found"); //engine_fatt -> engine invoice id
         require(temp <= 135, "Temperature class error"); //check if the tested temperature class is less then or equal to teh one defined in the certificate (defiened when the cintract is created)
-        if (ts != 230 && fr != 50 && Y != -1){ //check the parameter for the alimentation tension
+        /*if (ts != 230 && fr != 50 && Y != -1){ //check the parameter for the alimentation tension
             revert("Alimentation tension Error");
-        }
-        engines[keccak256(abi.encodePacked(object))] = true; //set as true an engine with ID lotto, azienda:number.
+        }*/
+        pump[keccak256(abi.encodePacked(object))] = true; //set as true an engine with ID lotto, azienda:number.
         //segnare i due pezzi cages e thread come non certificati !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        emit certEngines(object,msg.sender);
+        //emit certPump(lot, user);
     } 
 
 
-    function isCertificatedThreads(uint fatt) view external returns(bool){ 
+    function isCertificatedBodies(uint fatt) view external returns(bool){ 
       
-        return threads[keccak256(abi.encodePacked(fatt))];
+        return body[keccak256(abi.encodePacked(fatt))];
     } 
 
-    function isCertificatedCages(uint fatt) view external returns(bool){
+    function isCertificatedPumps(uint fatt) view external returns(bool){
  
-        return cages[keccak256(abi.encodePacked(fatt))];
+        return pump[keccak256(abi.encodePacked(fatt))];
     } 
 
     function isCertificatedEngines(string memory lot) view external returns(bool){
     
-        return engines[keccak256(abi.encodePacked(lot))];
+        return engine[keccak256(abi.encodePacked(lot))];
     } 
 
    function isM1() view external returns(bool) {

@@ -140,6 +140,7 @@ contract ElectricEngine {
         require(timef[msg.sender]>block.number, "your time of usage end");
         bubbleSteel[keccak256(abi.encodePacked(object))] = true;
     } 
+    
 
     function certificateCoppers(int proofo, string memory object) external {
         require(proofo>proof[1],"not valid Coppers");

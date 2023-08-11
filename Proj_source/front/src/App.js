@@ -6,6 +6,8 @@ import { DrizzleContext} from '@drizzle/react-plugin';
 import { Drizzle } from "@drizzle/store";
 import { newContextComponents } from "@drizzle/react-components";
 
+
+
 //Set contract in drizzle option
 const drizzleOptions = {
   contracts: [ElectricEngine],
@@ -14,6 +16,29 @@ const drizzleOptions = {
 const { AccountData, ContractData, ContractForm } = newContextComponents;
 
 const drizzle = new Drizzle(drizzleOptions);
+
+
+
+//Function to add m1
+function addm1(){
+
+  var state = drizzle.store.getState();
+  
+    var lotto = document.getElementById('m1').value;
+  
+   // If Drizzle is initialized (and therefore web3, accounts and contracts), continue.
+    if (state.drizzleStatus.initialized) {
+      try{
+        drizzle.contracts.ElectricEngine.methods.addm1(lotto).send();
+      }catch(error){}
+        
+      
+
+    }
+  
+}
+
+
 
 //Function to ask if the engines lot is certified
 function lotCert(){
@@ -29,12 +54,12 @@ function lotCert(){
     dataKey.then(value => { document.getElementById('risp').innerHTML = value;})
   }
 }
-
 //Web app function
 function App() {
   return (
     <DrizzleContext.Provider drizzle={drizzle}>
     <h2>Set you as certifier</h2>
+    
     <DrizzleContext.Consumer>
     
     {drizzleContext => {
@@ -57,24 +82,12 @@ function App() {
       }}
   </DrizzleContext.Consumer>
   <h2>Add m1</h2>
-  <DrizzleContext.Consumer>
-    
-    {drizzleContext => {
-      
-      //console.log(drizzleContext)
-      const {drizzle, drizzleState, initialized} = drizzleContext;
+  <form>
+      <input id="m1" type="text" name="lott" placeholder="lott" ></input>
+      <button type="button" onClick={addm1}>Submit</button>
+  </form>
+  
 
-
-      if(!initialized) {
-        return "Loading..."
-      }
-
-      return (
-        //Call contract's method
-        <ContractForm drizzle={drizzle} contract='ElectricEngine' method='addm1'/>
-        )
-      }}
-  </DrizzleContext.Consumer>
 
   <h2>Add m2</h2>
   <DrizzleContext.Consumer>
