@@ -20,7 +20,7 @@ const drizzle = new Drizzle(drizzleOptions);
 
 
 //Function to add m1
-function addm1(){
+async function addm1(){
 
   var state = drizzle.store.getState();
   
@@ -29,8 +29,10 @@ function addm1(){
    // If Drizzle is initialized (and therefore web3, accounts and contracts), continue.
     if (state.drizzleStatus.initialized) {
       try{
-        drizzle.contracts.ElectricEngine.methods.addm1(lotto).send();
-      }catch(error){}
+        await drizzle.contracts.ElectricEngine.methods.addm1(lotto).send();
+      }catch(error){
+        console.log("error add m1")
+     }
         
       
 
