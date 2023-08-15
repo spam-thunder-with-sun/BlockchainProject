@@ -37,8 +37,29 @@ contract ElectricPump {
         certifier = msg.sender;
     }
 
-    function addm1(address  ut1) external { 
-        require(certifier == msg.sender, "you are not a certifier");
+    modifier isCertifier{
+      require(certifier == msg.sender, "you are not a certifier");
+      _;
+
+
+    }
+
+    modifier ism1{
+      require(m1[msg.sender] == true, "you are not qualified user");
+      _;
+
+
+    }
+
+    modifier ism2{
+      require(m2[msg.sender] == true, "you are not qualified user");
+      _;
+
+
+    }
+
+    function addm1(address  ut1) external isCertifier{ 
+        
         require(certifier != ut1, "A ceritifier cannot be also a M1");
         require(timem1[ut1]<block.number,"you have still time");
         timem1[ut1] = SafeMath.add(block.number, 40); //Assign to the producer the block where its service ends
@@ -46,8 +67,7 @@ contract ElectricPump {
         emit addedm1(ut1);
     } 
 
-    function addm2(address ut2) external {
-        require(certifier == msg.sender, "you are not a certifier");
+    function addm2(address ut2) external isCertifier{
         require(certifier != ut2, "A ceritifier cannot be also a M1");
         require(timem2[ut2]<block.number,"you have still time");
         timem2[ut2] = SafeMath.add(block.number, 40); //Assign to the producer the block where its service ends
@@ -55,21 +75,21 @@ contract ElectricPump {
         emit addedm2(ut2);
     } 
 
-    function certificateEngine(uint fatt, string memory producer) external { //Ask engine data (Producer and Fattura d'aquisto) to certidicate the engine
-        require(m1[msg.sender] == true, "you are not qualified user");
+    function certificateEngine(uint fatt, string memory producer) external ism1{ //Ask engine data (Producer and Fattura d'aquisto) to certidicate the engine
+        
         require(timem1[msg.sender]>block.number, "your time of usage end");
         engine[keccak256(abi.encodePacked(fatt))] = true; //the key value for the threads is now the invoice (fattura) code.
         emit certEngine(fatt,msg.sender,producer);
     }
 
-    function certificateBody(uint fatt, string memory producer) external { //Ask for body data (Producer and Fattura d'aquisto) to certificate the body
+    function certificateBody(uint fatt, string memory producer) external ism1{ //Ask for body data (Producer and Fattura d'aquisto) to certificate the body
         require(m1[msg.sender] == true, "you are not qualified user");
         require(timem1[msg.sender]>block.number, "your time of usage end");
         body[keccak256(abi.encodePacked(fatt))] = true;//the key value for the threads is now the invoice (fattura) code.
         emit certBody(fatt,msg.sender,producer);
     }
 
-    function certificatePump(uint body_fatt, uint engine_fatt, int power, int voltage, int maxvoltage, int t, int freq, int maxspeed, int dens, int maxdepth, int temp, string memory object) external {
+    function certificatePump(uint body_fatt, uint engine_fatt, int power, int voltage, int maxvoltage, int t, int freq, int maxspeed, int dens, int maxdepth, int temp, string memory object) external ism2{
         require(m2[msg.sender] == true, "you are not qualified user");
         require(timem2[msg.sender]>block.number, "your time of usage end"); 
         require(body[keccak256(abi.encodePacked(body_fatt))] == true, "cages not found"); //body_fatt -> body invoice
