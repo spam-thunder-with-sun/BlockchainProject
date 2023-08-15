@@ -20,7 +20,7 @@ function VerifyCertification() {
             <Navbar />
             <DrizzleContext.Provider drizzle={drizzle}>
             <div className="items-center flex justify-center">
-                <form className="form flex rounded-lg w-1/2 mt-8" id="myform" onSubmit={(event) => {event.preventDefault();}}>
+                <form className="form flex rounded-lg w-1/2 mt-8 min-w-[650px]" id="myform" onSubmit={(event) => {event.preventDefault();}}>
                     <div className="flex-1 px-16 py-8">
                         <h1 className="text-3xl pb-2 text-center font-bold">
                             Verify here if your engine is certified
@@ -33,7 +33,7 @@ function VerifyCertification() {
                             <div className="pb-4">
                                 <label htmlFor="lotNumber" className={`block font-latoBold text-sm pb-2`}></label>
                                 <input
-                                    className="border-2 border-gray-500 p-2 w-full rounded-md w-1/2 focus:border-[#393E46] focus:ring-[#393E46] "
+                                    className="mb-4 border-x-4 border-y-2 border-[#393E46] p-2 rounded-md focus:border-[#393E46] focus:ring-[#393E46] w-full"
                                     type="text"
                                     id="lotNumber"
                                     name="lotNumber"
