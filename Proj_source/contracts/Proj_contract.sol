@@ -97,6 +97,27 @@ contract ElectricEngine {
 
     }
 
+    modifier ism1{
+      require(m1[msg.sender] == true, "you are not qualified user");
+      _;
+
+
+    }
+
+    modifier ism2{
+      require(m2[msg.sender] == true, "you are not qualified user");
+      _;
+
+
+    }
+
+    function delm1(address  ut1) external ism1{ 
+
+        delete timem1[ut1];
+        delete m1[ut1];
+    }  
+
+
     function addm1(address  ut1) external isCertifier{ 
 
         //require(infop>info[0],"you aren't a m1");
@@ -105,7 +126,9 @@ contract ElectricEngine {
         timem1[ut1] = SafeMath.add(block.number, 40); //Assign to the producer the block where its service ends
         m1[ut1] = true; //ut1 is a producer of cages and threads
         emit addedm1(ut1);
-    } 
+    }
+
+    
 
     function addm2(address ut2) external isCertifier{
 
@@ -157,24 +180,24 @@ contract ElectricEngine {
 
     */
 
-    function certificateThreads(uint fatt, string memory producer) external { //Ask threads data (Producer and Fattura d'aquisto) to certidicate the threads
-        require(m1[msg.sender] == true, "you are not qualified user");
+    function certificateThreads(uint fatt, string memory producer) external ism1{ //Ask threads data (Producer and Fattura d'aquisto) to certidicate the threads
+        
         require(timem1[msg.sender]>block.number, "your time of usage end");
         threads[keccak256(abi.encodePacked(fatt))] = true; //the key value for the threads is now the invoice (fattura) code.
         emit certThreads(fatt,msg.sender,producer);
         //return(producer, fatt); //this function return the producer and the invoice code - if useful
     }
 
-    function certificateCage(uint fatt, string memory producer) external { //Ask for cages data (Producer and Fattura d'aquisto) to certificate the cages
-        require(m1[msg.sender] == true, "you are not qualified user");
+    function certificateCage(uint fatt, string memory producer) external ism1{ //Ask for cages data (Producer and Fattura d'aquisto) to certificate the cages
+        
         require(timem1[msg.sender]>block.number, "your time of usage end");
         cages[keccak256(abi.encodePacked(fatt))] = true;//the key value for the threads is now the invoice (fattura) code.
         emit certCages(fatt,msg.sender,producer);
         //return(producer, fatt); //As above
     }
 
-    function certificateEngines(uint cage_fatt, uint thread_fatt, int temp, int ts, int fr, int Y, string memory object) external {
-        require(m2[msg.sender] == true, "you are not qualified user");
+    function certificateEngines(uint cage_fatt, uint thread_fatt, int temp, int ts, int fr, int Y, string memory object) external ism2{
+       
         require(timem2[msg.sender]>block.number, "your time of usage end"); 
         require(cages[keccak256(abi.encodePacked(cage_fatt))] == true, "cages not found"); //cage_fatt -> cage invoice//thread_fatt -> thread invoice id
         require(threads[keccak256(abi.encodePacked(thread_fatt))] == true, "threads not found"); //thread_fatt -> thread invoice id
