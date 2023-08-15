@@ -90,10 +90,16 @@ contract ElectricEngine {
 
     }
 
-    function addm1(address  ut1) external { 
+    modifier isCertifier{
+      require(certifier == msg.sender, "you are not a certifier");
+      _;
+
+
+    }
+
+    function addm1(address  ut1) external isCertifier{ 
 
         //require(infop>info[0],"you aren't a m1");
-        require(certifier == msg.sender, "you are not a certifier");
         require(certifier != ut1, "A ceritifier cannot be also a M1");
         require(timem1[ut1]<block.number,"you have still time");
         timem1[ut1] = SafeMath.add(block.number, 40); //Assign to the producer the block where its service ends
@@ -101,7 +107,7 @@ contract ElectricEngine {
         emit addedm1(ut1);
     } 
 
-    function addm2(address ut2) external {
+    function addm2(address ut2) external isCertifier{
 
         //require(infop>info[1],"you aren't a m2");
         require(certifier == msg.sender, "you are not a certifier");
