@@ -253,6 +253,7 @@ function CreateMotor() {
 
     var [isM1, updateM1] = React.useState(false);
     var [isM2, updateM2] = React.useState(false);
+    var [isCertifier, updateCertifier] = React.useState(false);
 
     var state = drizzle.store.getState();
 
@@ -261,6 +262,7 @@ function CreateMotor() {
         try {
             let prom_isM1 = drizzle.contracts.ElectricEngine.methods.isM1().call();
             let prom_isM2 = drizzle.contracts.ElectricEngine.methods.isM2().call();
+            let prom_isCertifier = drizzle.contracts.ElectricEngine.methods.isCertifier().call();
 
             //Visualize the answer
             prom_isM1.then(value => {
@@ -271,6 +273,11 @@ function CreateMotor() {
             prom_isM2.then(value => {
                 updateM2(value);
                 //console.log("Is M2: " + isM2);
+            });            
+            
+            prom_isCertifier.then(value => {
+                updateCertifier(value);
+                //console.log("Is Certifier: " + isCertifier);
             });
 
         } catch (error) {
@@ -297,7 +304,7 @@ function CreateMotor() {
                             <p className="">Please insert the data of your engine and click on the button</p>
                             <p className="text-center font-bold" id="responce">&nbsp;</p>
                             {/* M1 */}
-                            <div className="" style={{ display: isM1 ? 'block' : 'none' }}>
+                            <div className="" style={{ display: isCertifier ? 'block' : 'none' }}>
                                 <p htmlFor="m1_input" className="indent-1 font-semibold mb-1" id="m1_title">Add m1</p>
                                 <div className="pb-4 space-x-4 hidden sm:flex">
                                     <input
@@ -307,7 +314,7 @@ function CreateMotor() {
                                 </div>
                             </div>
                             {/* M2 */}
-                            <div className="" style={{ display: isM2 ? 'block' : 'none' }}>
+                            <div className="" style={{ display: isCertifier ? 'block' : 'none' }}>
                                 <p htmlFor="m2_input" className="indent-1 font-semibold mb-1" id="m2_title">Add m2</p>
                                 <div className="pb-4 space-x-4 hidden sm:flex">
                                     <input
@@ -316,9 +323,6 @@ function CreateMotor() {
                                     <button type="button" onClick={add_m.bind(this, "m2")} className="bg-teal text-sm rounded-lg px-4 py-3 text-[#EEEEEE] w-1/6 ml-1" id="m2_button">Go!</button>
                                 </div>
                             </div>
-                            <br></br>
-                            <hr></hr>
-                            <br></br>
                             {/* Certify threads */}
                             <div className="" style={{ display: isM1 ? 'block' : 'none' }}>
                                 <p className="indent-1 font-semibold mb-1" id="threads_title">Certify threads</p>
