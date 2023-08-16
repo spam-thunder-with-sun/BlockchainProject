@@ -310,7 +310,7 @@ function CreateMotor() {
                                     <input
                                         className="border-x-4 border-y-2 border-[#393E46] p-2 rounded-md w-1/2 focus:border-[#393E46] focus:ring-[#393E46] w-5/6"
                                         type="number" id="m1_input" placeholder="M1 number" />
-                                    <button type="button" onClick={add_m.bind(this, "m1")} className="bg-teal text-sm rounded-lg px-4 py-3 text-[#EEEEEE] w-1/6 ml-1" id="m1_button">Go!</button>
+                                    <button type="button" onClick={add_m.bind(this, "m1")} className="bg-teal text-sm rounded-lg px-4 py-3 text-[#EEEEEE] w-1/6 ml-1 hover:bg-[#222831]" id="m1_button">Go!</button>
                                 </div>
                             </div>
                             {/* M2 */}
@@ -320,7 +320,7 @@ function CreateMotor() {
                                     <input
                                         className="border-x-4 border-y-2 border-[#393E46] p-2 rounded-md w-1/2 focus:border-[#393E46] focus:ring-[#393E46] w-5/6"
                                         type="number" id="m2_input" placeholder="M2 number" />
-                                    <button type="button" onClick={add_m.bind(this, "m2")} className="bg-teal text-sm rounded-lg px-4 py-3 text-[#EEEEEE] w-1/6 ml-1" id="m2_button">Go!</button>
+                                    <button type="button" onClick={add_m.bind(this, "m2")} className="bg-teal text-sm rounded-lg px-4 py-3 text-[#EEEEEE] w-1/6 ml-1 hover:bg-[#222831]" id="m2_button">Go!</button>
                                 </div>
                             </div>
                             {/* Certify threads */}
@@ -329,7 +329,7 @@ function CreateMotor() {
                                 <div className="space-x-4 hidden sm:flex">
                                     <input className="border-x-4 border-y-2 border-[#393E46] p-2 rounded-md focus:border-[#393E46] focus:ring-[#393E46] " type="number" id="threads_fatt" placeholder="Invoice" />
                                     <input className="border-x-4 border-y-2 border-[#393E46] p-2 rounded-md focus:border-[#393E46] focus:ring-[#393E46]" type="text" id="threads_producer" placeholder="Producer" />
-                                    <button type="button" onClick={certify.bind(this, "threads")} className="bg-teal text-sm rounded-lg px-4 py-3 text-[#EEEEEE] w-1/6 ml-1" id="threads_button">Go!</button>
+                                    <button type="button" onClick={certify.bind(this, "threads")} className="bg-teal text-sm rounded-lg px-4 py-3 text-[#EEEEEE] w-1/6 ml-1 hover:bg-[#222831]" id="threads_button">Go!</button>
                                 </div>
                                 <p className="indent-1" id="threads_text">&nbsp;</p>
                             </div>
@@ -339,7 +339,7 @@ function CreateMotor() {
                                 <div className=" space-x-4 hidden sm:flex">
                                     <input className="border-x-4 border-y-2 border-[#393E46] p-2 rounded-md focus:border-[#393E46] focus:ring-[#393E46] " type="number" id="cages_fatt" placeholder="Invoice" />
                                     <input className="border-x-4 border-y-2 border-[#393E46] p-2 rounded-md focus:border-[#393E46] focus:ring-[#393E46]" type="text" id="cages_producer" placeholder="Producer" />
-                                    <button type="button" onClick={certify.bind(this, "cages")} className="bg-teal text-sm rounded-lg px-4 py-3 text-[#EEEEEE] w-1/6 ml-1" id="cages_button">Go!</button>
+                                    <button type="button" onClick={certify.bind(this, "cages")} className="bg-teal text-sm rounded-lg px-4 py-3 text-[#EEEEEE] w-1/6 ml-1 hover:bg-[#222831]" id="cages_button">Go!</button>
                                 </div>
                                 <p className="indent-1" id="cages_text">&nbsp;</p>
                             </div>
@@ -354,7 +354,7 @@ function CreateMotor() {
                                 <input className="mb-4 border-x-4 border-y-2 border-[#393E46] p-2 rounded-md focus:border-[#393E46] focus:ring-[#393E46] w-full" type="number" id="engine_y" placeholder="Y" />
                                 <input className="mb-4 border-x-4 border-y-2 border-[#393E46] p-2 rounded-md focus:border-[#393E46] focus:ring-[#393E46] w-full" type="text" id="engine_object" placeholder="Object" />
                                 <div className="items-center flex justify-center">
-                                    <button type="button" onClick={certifyEngine} className="bg-teal text-sm rounded-lg px-4 py-3 text-[#EEEEEE] w-1/6 ml-1" id="engine_button">Go!</button>
+                                    <button type="button" onClick={certifyEngine} className="bg-teal text-sm rounded-lg px-4 py-3 text-[#EEEEEE] w-1/6 ml-1 hover:bg-[#222831]" id="engine_button">Go!</button>
                                 </div>
                                 <p className="indent-1" id="engine_text">&nbsp;</p>
                             </div>
