@@ -41,7 +41,7 @@ function VerifyCertification() {
                                 />
                             </div>
                             <div className="items-center flex justify-center">
-                                <button type="button" onClick={verifyLotCert} className="bg-teal text-sm rounded-lg px-8 py-4 text-[#EEEEEE]">Verify</button>
+                                <button type="button" onClick={verifyLotCert} className="bg-teal text-sm rounded-lg px-8 py-4 text-[#EEEEEE] hover:bg-[#222831]">Verify</button>
                             </div>
                         </div>
                     </div>
