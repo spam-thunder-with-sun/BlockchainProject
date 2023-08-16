@@ -243,6 +243,12 @@ contract ElectricEngine {
         return m2[msg.sender];
     }   
 
+    
+    function isCertifier_() view external returns(bool){
+   
+        return certifier == msg.sender;
+    }  
+
     /*function isF() view external returns(bool){
       
         return f[msg.sender];

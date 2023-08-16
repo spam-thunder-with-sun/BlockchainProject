@@ -262,7 +262,7 @@ function CreateMotor() {
         try {
             let prom_isM1 = drizzle.contracts.ElectricEngine.methods.isM1().call();
             let prom_isM2 = drizzle.contracts.ElectricEngine.methods.isM2().call();
-            let prom_isCertifier = drizzle.contracts.ElectricEngine.methods.isCertifier().call();
+            let prom_isCertifier = drizzle.contracts.ElectricEngine.methods.isCertifier_().call();
 
             //Visualize the answer
             prom_isM1.then(value => {
