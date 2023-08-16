@@ -58,6 +58,18 @@ contract ElectricPump {
 
     }
 
+    function delm1(address  ut1) external ism1{ 
+
+        delete timem1[ut1];
+        delete m1[ut1];
+    }  
+
+    function delm2(address  ut2) external ism2{ 
+
+        delete timem2[ut2];
+        delete m2[ut2];
+    }  
+
     function addm1(address  ut1) external isCertifier{ 
         
         require(certifier != ut1, "A ceritifier cannot be also a M1");
@@ -83,14 +95,14 @@ contract ElectricPump {
     }
 
     function certificateBody(uint fatt, string memory producer) external ism1{ //Ask for body data (Producer and Fattura d'aquisto) to certificate the body
-        require(m1[msg.sender] == true, "you are not qualified user");
+       
         require(timem1[msg.sender]>block.number, "your time of usage end");
         body[keccak256(abi.encodePacked(fatt))] = true;//the key value for the threads is now the invoice (fattura) code.
         emit certBody(fatt,msg.sender,producer);
     }
 
     function certificatePump(uint body_fatt, uint engine_fatt, int power, int voltage, int maxvoltage, int t, int freq, int maxspeed, int dens, int maxdepth, int temp, string memory object) external ism2{
-        require(m2[msg.sender] == true, "you are not qualified user");
+      
         require(timem2[msg.sender]>block.number, "your time of usage end"); 
         require(body[keccak256(abi.encodePacked(body_fatt))] == true, "cages not found"); //body_fatt -> body invoice
         require(engine[keccak256(abi.encodePacked(engine_fatt))] == true, "threads not found"); //engine_fatt -> engine invoice id

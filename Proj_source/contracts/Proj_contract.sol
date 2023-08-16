@@ -54,6 +54,7 @@ contract ElectricEngine {
       //owner = msg.sender;
       certifier = msg.sender;
       
+      
 
       // DOMANDA -- Facciamo creare i certificati europei agli utenti certificatori oppure usiamo i certificatori solo come gli utenti che controllano i singoli lotti?
 
@@ -115,6 +116,12 @@ contract ElectricEngine {
 
         delete timem1[ut1];
         delete m1[ut1];
+    }  
+
+    function delm2(address  ut2) external ism2{ 
+
+        delete timem2[ut2];
+        delete m2[ut2];
     }  
 
 
