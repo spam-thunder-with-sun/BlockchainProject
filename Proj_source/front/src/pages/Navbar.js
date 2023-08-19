@@ -11,6 +11,7 @@ function Navbar() {
             <ul className='navbar-menu'>
                 <li><Link to="/">Home</Link></li>
                 <li><Link to="/createmotor">Create motor</Link></li>
+                <li><Link to="/createpump">Create pump</Link></li>
                 <li><Link to="/verifycertification">Verify certification</Link></li>
                 {/*<li><Link to="/admin">Admin</Link> </li>*/}
                 <li><Link to="/aboutus">About Us</Link> </li>
