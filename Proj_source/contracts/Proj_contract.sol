@@ -7,6 +7,22 @@ import "./Certificate_contract.sol";
 
 contract ElectricEngine is BaseCertContract{
 
+    //Struct for a electric engine
+    struct ElecEngine{ 
+ 		uint cage_fatt;
+        uint thread_fatt;
+        int temp;
+        int ts;
+        int fr;
+        int Y;
+        string object;
+    }
+
+    
+    mapping(bytes32 => ElecEngine) private dat;
+
+
+
    
     //mapping(address => bool) private g;
     //mapping(address => bool) private f;
@@ -147,6 +163,13 @@ contract ElectricEngine is BaseCertContract{
             revert("Alimentation tension Error");
         }
         engines[keccak256(abi.encodePacked(object))] = true; //set as true an engine with ID lotto, azienda:number.
+        dat[keccak256(abi.encodePacked(object))].cage_fatt = cage_fatt;
+        dat[keccak256(abi.encodePacked(object))].thread_fatt = thread_fatt;
+        dat[keccak256(abi.encodePacked(object))].temp = temp;
+        dat[keccak256(abi.encodePacked(object))].ts = ts;
+        dat[keccak256(abi.encodePacked(object))].fr = fr;
+        dat[keccak256(abi.encodePacked(object))].Y = Y;
+        dat[keccak256(abi.encodePacked(object))].object = object;
         //segnare i due pezzi cages e thread come non certificati !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         emit certEngines(object,msg.sender);
     } 
@@ -159,6 +182,13 @@ contract ElectricEngine is BaseCertContract{
    
         return bubbleCopper[keccak256(abi.encodePacked(object))];
     }   */
+
+    //Get info of a electric engine
+    function getElectricEngineData(string memory object) external view returns(uint,uint,int,int,int,int){
+       
+        require(engines[keccak256(abi.encodePacked(object))] == true, "object isn't recorded");
+        return (dat[keccak256(abi.encodePacked(object))].cage_fatt, dat[keccak256(abi.encodePacked(object))].thread_fatt, dat[keccak256(abi.encodePacked(object))].temp, dat[keccak256(abi.encodePacked(object))].ts, dat[keccak256(abi.encodePacked(object))].fr, dat[keccak256(abi.encodePacked(object))].Y);
+    }
 
     function isCertificatedThreads(uint fatt) view external returns(bool){ 
       

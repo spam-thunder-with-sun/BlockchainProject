@@ -15,6 +15,7 @@ import VerifyCertification from './pages/VerifyCertification';
 import AboutUs from './pages/AboutUs';
 import Admin from './pages/Admin';
 import CreateMotor from './pages/CreateMotor';
+import CreatePump from './pages/CreatePump';
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
   {
     path: "/createmotor",
     element: <CreateMotor />,
+  },
+  {
+    path: "/createpump",
+    element: <CreatePump />,
   },
   {
     path: "/aboutus",

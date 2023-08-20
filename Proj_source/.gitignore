@@ -3,3 +3,6 @@
 # dependencies
 /node_modules
 /.vscode
+
+#truffle config
+truffle-config.js
