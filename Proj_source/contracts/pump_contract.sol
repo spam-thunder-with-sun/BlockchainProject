@@ -73,7 +73,7 @@ contract ElectricPump is BaseCertContract{
     } 
 
     //Get info of a electric pump
-    function getElectricEngineData(string memory object) external view returns(uint,uint,int,int,int,int){
+    function getElectricPumpData(string memory object) external view returns(uint,uint,int,int,int,int){
        
         require(pump[keccak256(abi.encodePacked(object))] == true, "Pump isn't recorded");
         return (dat[keccak256(abi.encodePacked(object))].body_fatt, dat[keccak256(abi.encodePacked(object))].engine_fatt, dat[keccak256(abi.encodePacked(object))].freq, dat[keccak256(abi.encodePacked(object))].maxspeed, dat[keccak256(abi.encodePacked(object))].maxdepth, dat[keccak256(abi.encodePacked(object))].temp);
