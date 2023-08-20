@@ -186,7 +186,7 @@ contract ElectricEngine is BaseCertContract{
     //Get info of a electric engine
     function getElectricEngineData(string memory object) external view returns(uint,uint,int,int,int,int){
        
-        require(engines[keccak256(abi.encodePacked(object))] == true, "object isn't recorded");
+        require(engines[keccak256(abi.encodePacked(object))] == true, "Engine isn't recorded");
         return (dat[keccak256(abi.encodePacked(object))].cage_fatt, dat[keccak256(abi.encodePacked(object))].thread_fatt, dat[keccak256(abi.encodePacked(object))].temp, dat[keccak256(abi.encodePacked(object))].ts, dat[keccak256(abi.encodePacked(object))].fr, dat[keccak256(abi.encodePacked(object))].Y);
     }
 

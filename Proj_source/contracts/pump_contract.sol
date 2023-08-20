@@ -7,7 +7,18 @@ import "./Certificate_contract.sol";
 
 contract ElectricPump is BaseCertContract{
 
-    
+    //Struct for a electric pump
+    struct ElecPump{ 
+ 		uint body_fatt; 
+        uint engine_fatt;
+        int freq; 
+        int maxspeed; 
+        int maxdepth; 
+        int temp; 
+        string object;
+    }
+
+    mapping(bytes32 => ElecPump) private dat;
    
     mapping(bytes32 => bool) private body; 
     mapping(bytes32 => bool) private pump;
@@ -20,7 +31,7 @@ contract ElectricPump is BaseCertContract{
     event certEngine(uint indexed fatt, address indexed user,string producer);
     event certPump(string indexed lot, address indexed user);
 
-
+   
 
     constructor() public BaseCertContract(){}
 
@@ -41,7 +52,7 @@ contract ElectricPump is BaseCertContract{
         emit certBody(fatt,msg.sender,producer);
     }
 
-    function certificatePump(uint body_fatt, uint engine_fatt,int freq, int maxspeed, int dens, int maxdepth, int temp, string memory object) external {
+    function certificatePump(uint body_fatt, uint engine_fatt,int freq, int maxspeed, int maxdepth, int temp, string memory object) external {
         require(m2[msg.sender] == true, "you are not qualified user");
         require(timem2[msg.sender]>block.number, "your time of usage end"); 
         require(body[keccak256(abi.encodePacked(body_fatt))] == true, "body not found"); //body_fatt -> body invoice
@@ -50,10 +61,23 @@ contract ElectricPump is BaseCertContract{
         require (maxspeed == 2850, "error nominal speed full capacity");
         require(maxdepth == 15, "error maximal depth of utilization");
         require(temp <= 135, "Temperature class error"); //check if the tested temperature class is less then or equal to teh one defined in the certificate (defiened when the cintract is created)
-
         pump[keccak256(abi.encodePacked(object))] = true; //set as true an engine with ID lotto, azienda:number.
+        dat[keccak256(abi.encodePacked(object))].body_fatt = body_fatt;
+        dat[keccak256(abi.encodePacked(object))].engine_fatt = engine_fatt;
+        dat[keccak256(abi.encodePacked(object))].freq = freq;
+        dat[keccak256(abi.encodePacked(object))].maxspeed = maxspeed;
+        dat[keccak256(abi.encodePacked(object))].maxdepth = maxdepth;
+        dat[keccak256(abi.encodePacked(object))].temp = temp;
+        dat[keccak256(abi.encodePacked(object))].object = object;
         emit certPump(object,msg.sender);
     } 
+
+    //Get info of a electric pump
+    function getElectricEngineData(string memory object) external view returns(uint,uint,int,int,int,int){
+       
+        require(pump[keccak256(abi.encodePacked(object))] == true, "Pump isn't recorded");
+        return (dat[keccak256(abi.encodePacked(object))].body_fatt, dat[keccak256(abi.encodePacked(object))].engine_fatt, dat[keccak256(abi.encodePacked(object))].freq, dat[keccak256(abi.encodePacked(object))].maxspeed, dat[keccak256(abi.encodePacked(object))].maxdepth, dat[keccak256(abi.encodePacked(object))].temp);
+    }
 
 
     function isCertificatedBody(uint fatt) view external returns(bool){ 
