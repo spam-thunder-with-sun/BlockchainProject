@@ -50,12 +50,9 @@ contract ElectricPump is BaseCertContract{
         require (maxspeed == 2850, "error nominal speed full capacity");
         require(maxdepth == 15, "error maximal depth of utilization");
         require(temp <= 135, "Temperature class error"); //check if the tested temperature class is less then or equal to teh one defined in the certificate (defiened when the cintract is created)
-        /*if (ts != 230 && fr != 50 && Y != -1){ //check the parameter for the alimentation tension
 
-            revert("Alimentation tension Error");
-        }*/
         pump[keccak256(abi.encodePacked(object))] = true; //set as true an engine with ID lotto, azienda:number.
-        emit certPump(lot, user);(object,msg.sender);
+        emit certPump(object,msg.sender);
     } 
 
 
@@ -73,4 +70,5 @@ contract ElectricPump is BaseCertContract{
     
         return pump[keccak256(abi.encodePacked(lot))];
     } 
+
 }
