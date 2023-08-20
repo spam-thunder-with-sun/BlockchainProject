@@ -200,7 +200,7 @@ contract ElectricEngine is BaseCertContract{
         return cages[keccak256(abi.encodePacked(fatt))];
     } 
 
-    function isCertificatedEngines(string memory lot) view external returns(bool){
+    function isCertificatedEngines(string memory lot) view public returns(bool){
     
         return engines[keccak256(abi.encodePacked(lot))];
     } 
