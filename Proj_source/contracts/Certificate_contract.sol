@@ -50,16 +50,16 @@ contract BaseCertContract {
 
     }
 
-    function delm1(address  ut1) external ism1{ 
+    function delm1() external ism1{ 
 
-        delete timem1[ut1];
-        delete m1[ut1];
+        delete timem1[msg.sender];
+        delete m1[msg.sender];
     }  
 
-    function delm2(address  ut2) external ism2{ 
+    function delm2() external ism2{ 
 
-        delete timem2[ut2];
-        delete m2[ut2];
+        delete timem2[msg.sender];
+        delete m2[msg.sender];
     }  
 
     function addm1(address  ut1) external isCertifier{ 
