@@ -17,6 +17,11 @@ import Admin from './pages/Admin';
 import CreateMotor from './pages/CreateMotor';
 import CreatePump from './pages/CreatePump';
 
+import ElectricEngine from './artifacts/ElectricEngine.json'
+import ElectricPump from './artifacts/ElectricPump.json'
+import { DrizzleContext } from '@drizzle/react-plugin';
+import { Drizzle } from "@drizzle/store";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -49,10 +54,27 @@ const router = createBrowserRouter([
   }
 ]);
 
+//Set contract in drizzle option
+const drizzleOptions = { contracts: [ElectricEngine, ElectricPump], };
+//const { AccountData, ContractData, ContractForm } = newContextComponents;
+const drizzle = new Drizzle(drizzleOptions);
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <DrizzleContext.Provider drizzle={drizzle}>
+      <DrizzleContext.Consumer>
+        {drizzleContext => {
+          const { drizzle, drizzleState, initialized } = drizzleContext;
+          if (!initialized) {
+            return "Loading..."
+          }
+          return (
+            <RouterProvider router={router} drizzle={drizzle} drizzleState={drizzleState} />
+          )
+        }}
+      </DrizzleContext.Consumer>
+    </DrizzleContext.Provider>
   </React.StrictMode>
 );
 

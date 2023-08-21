@@ -1,5 +1,6 @@
 import React from 'react';
-import ElectricEngine from './../artifacts/ElectricEngine.json' //import project contract
+import ElectricEngine from './../artifacts/ElectricEngine.json'
+import ElectricPump from './../artifacts/ElectricPump.json' 
 import { DrizzleContext } from '@drizzle/react-plugin';
 import { Drizzle } from "@drizzle/store";
 /*
@@ -16,7 +17,7 @@ import './../index.css';
 import './../css/form.css';
 
 //Set contract in drizzle option
-const drizzleOptions = { contracts: [ElectricEngine], };
+const drizzleOptions = { contracts: [ElectricEngine, ElectricPump], };
 //const { AccountData, ContractData, ContractForm } = newContextComponents;
 const drizzle = new Drizzle(drizzleOptions);
 
@@ -65,7 +66,7 @@ function add_m(item) {
         lotto.style.borderColor = "green";
         lotto.value = "";
         button.disabled = true;
-        title.textContent += " - Done!";
+        //title.textContent += " - Done!";
     }
     else {
         lotto.style.borderColor = "red";
@@ -136,7 +137,8 @@ function certify(item) {
         fatt.value = "";
         producer.value = "";
         button.disabled = true;
-        title.textContent += " - Done!";
+
+        //title.textContent += " - Done!";
     }
     else {
         fatt.style.borderColor = "red";
@@ -222,7 +224,7 @@ function certifyEngine() {
         y.value = "";
         object.value = "";
         button.disabled = true;
-        title.textContent += " - Done!";
+        //title.textContent += " - Done!";
     }
     else {
         threads.style.borderColor = "red";
@@ -284,11 +286,8 @@ function CreateMotor() {
             console.log(error);
         }
     }
-
-    /*}
     else
-        alert("Drizzle not initialized");
-    {*/
+        console.log("Drizzle not initialized");
 
     return (
         <div>
@@ -309,7 +308,7 @@ function CreateMotor() {
                                 <div className="pb-4 space-x-4 hidden sm:flex">
                                     <input
                                         className="border-x-4 border-y-2 border-[#393E46] p-2 rounded-md w-1/2 focus:border-[#393E46] focus:ring-[#393E46] w-5/6"
-                                        type="number" id="m1_input" placeholder="M1 number" />
+                                        type="text" id="m1_input" placeholder="M1 number" />
                                     <button type="button" onClick={add_m.bind(this, "m1")} className="bg-teal text-sm rounded-lg px-4 py-3 text-[#EEEEEE] w-1/6 ml-1 hover:bg-[#222831]" id="m1_button">Go!</button>
                                 </div>
                             </div>
@@ -319,7 +318,7 @@ function CreateMotor() {
                                 <div className="pb-4 space-x-4 hidden sm:flex">
                                     <input
                                         className="border-x-4 border-y-2 border-[#393E46] p-2 rounded-md w-1/2 focus:border-[#393E46] focus:ring-[#393E46] w-5/6"
-                                        type="number" id="m2_input" placeholder="M2 number" />
+                                        type="text" id="m2_input" placeholder="M2 number" />
                                     <button type="button" onClick={add_m.bind(this, "m2")} className="bg-teal text-sm rounded-lg px-4 py-3 text-[#EEEEEE] w-1/6 ml-1 hover:bg-[#222831]" id="m2_button">Go!</button>
                                 </div>
                             </div>
