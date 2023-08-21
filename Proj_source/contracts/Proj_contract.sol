@@ -184,10 +184,10 @@ contract ElectricEngine is BaseCertContract{
     }   */
 
     //Get info of a electric engine
-    function getElectricEngineData(string memory object) external view returns(uint,uint,int,int,int,int){
+    function getElectricEngineData(string memory object) view external returns(uint,uint,int,int,int,int){
        
         require(engines[keccak256(abi.encodePacked(object))] == true, "Engine isn't recorded");
-        return (dat[keccak256(abi.encodePacked(object))].cage_fatt, dat[keccak256(abi.encodePacked(object))].thread_fatt, dat[keccak256(abi.encodePacked(object))].temp, dat[keccak256(abi.encodePacked(object))].ts, dat[keccak256(abi.encodePacked(object))].fr, dat[keccak256(abi.encodePacked(object))].Y);
+        return (dat[keccak256(abi.encodePacked(object))].thread_fatt, dat[keccak256(abi.encodePacked(object))].cage_fatt, dat[keccak256(abi.encodePacked(object))].temp, dat[keccak256(abi.encodePacked(object))].ts, dat[keccak256(abi.encodePacked(object))].fr, dat[keccak256(abi.encodePacked(object))].Y);
     }
 
     function isCertificatedThreads(uint fatt) view external returns(bool){ 

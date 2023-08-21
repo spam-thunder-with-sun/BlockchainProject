@@ -1,112 +1,130 @@
+//This page is used to verify if a lot is certified or not
+//The user insert the lot number and click on the verify button
+//The system check if the lot is certified or not and show the result
+//If the lot is certified the system create a pdf with the data of the lot
+//The pdf is downloaded automatically
+
 import React from 'react';
-//import { useForm, SubmitHandler } from "react-hook-form";
 import ElectricEngine from './../artifacts/ElectricEngine.json' //import project contract
 import ElectricPump from './../artifacts/ElectricPump.json' //import project contract
 import { DrizzleContext } from '@drizzle/react-plugin';
 import { Drizzle } from "@drizzle/store";
-//import { newContextComponents } from "@drizzle/react-components";
 import { useState } from 'react';
-//import { useEffect } from 'react';
-//import { useDrizzle, useDrizzleState } from '@drizzle/react-plugin';
-//import { DrizzleProvider } from '@drizzle/react-plugin';
-//import { DrizzleContextProvider } from '@drizzle/react-plugin';
-//import { DrizzleContextConsumer } from '@drizzle/react-plugin';
-//import ReactDOM from 'react-dom';
-//import { PDFViewer } from '@react-pdf/renderer';
-import { PDFDownloadLink } from '@react-pdf/renderer';
+import { pdf } from "@react-pdf/renderer";
+import * as FileSaver from "file-saver";
 import './../index.css';
 import './../css/form.css';
 import Navbar from './/Navbar';
-import EngineDataPDF from './../component/pdfCreator';
-
-import { pdf } from "@react-pdf/renderer";
-import * as FileSaver from "file-saver";
+import {EngineDataPDF, PumpDataPDF} from './../component/pdfCreator';
 
 //Set contract in drizzle option
 const drizzleOptions = { contracts: [ElectricEngine, ElectricPump], };
-//const { AccountData, ContractData, ContractForm } = newContextComponents;
 const drizzle = new Drizzle(drizzleOptions);
 
 function VerifyCertification() {
-    //To manage the state of the pdf link
-    var [viewPDF, updateViewPDF] = React.useState(false);
+    //To generate the pdf
     const generateEnginePdfDocument = async (data, fileName) => {
         const blob = await pdf(
-            <EngineDataPDF data={data}/>
+            <EngineDataPDF data={data} />
+        ).toBlob();
+
+        FileSaver.saveAs(blob, fileName);
+    };
+    const generatePumpPdfDocument = async (data, fileName) => {
+        const blob = await pdf(
+            <PumpDataPDF data={data} />
         ).toBlob();
 
         FileSaver.saveAs(blob, fileName);
     };
 
-    //Permette di gestire i radio button
+    //To manage the state of the radio buttons
     var [_type, setType] = useState("engine");
     const onOptionChange = e => { setType(e.target.value) };
 
     //Function to ask if the engines lot is certified
     function verifyLotCert() {
+        //Get the state of drizzle
         var state = drizzle.store.getState();
+        //Get the lot number
         var lotto = document.getElementById('lotNumber').value;
-
+        //Get the responce text
         var textResponce = document.getElementById('responce');
+        //Get the form
         var form = document.getElementById('myform');
 
-        // If Drizzle is initialized (and therefore web3, accounts and contracts), continue.
-        if (lotto !== "" && lotto !== null && lotto !== undefined && state.drizzleStatus.initialized) {
-            var dataKey;
+        try {
+            //Check if the input field is empty
+            if (lotto === "" || lotto == null || lotto === undefined)
+                throw new Error('Input field is empty');
 
-            //Call contract's method
+            //Check if drizzle is initialized
+            if (!state.drizzleStatus.initialized)
+                throw new Error('Drizzle is not initialized');
+
+            //Check if the lot number is certified
+            var checkCert;
             if (_type === "pump")
-                dataKey = drizzle.contracts.ElectricPump.methods.isCertificatedPump(lotto).call();
+                checkCert = drizzle.contracts.ElectricPump.methods.isCertificatedPump(lotto).call();
             else
-                dataKey = drizzle.contracts.ElectricEngine.methods.isCertificatedEngines(lotto).call();
+                checkCert = drizzle.contracts.ElectricEngine.methods.isCertificatedEngines(lotto).call();
 
             //Visualize the answer
-            dataKey.then(value => {
-                if (value == true) {
+            checkCert.then(value => {
+                if (value === true) {
+                    //Get the certification data
+                    var lotInfo;
+                    if (_type === "pump")
+                        lotInfo = drizzle.contracts.ElectricPump.methods.getElectricPumpData(lotto).call();
+                    else
+                        lotInfo = drizzle.contracts.ElectricEngine.methods.getElectricEngineData(lotto).call();
+
+                    lotInfo.then(value => {
+                        let tmp = [];
+                        tmp[0] = lotto;
+                        tmp[1] = value[0];
+                        tmp[2] = value[1];
+                        tmp[3] = value[2];
+                        tmp[4] = value[3];
+                        tmp[5] = value[4];
+                        tmp[6] = value[5];
+
+                        if (_type === "pump")
+                            generatePumpPdfDocument(tmp, lotto + "-" +  new Date().toISOString() + ".pdf");
+                        else
+                            generateEnginePdfDocument(tmp, lotto + "-" +  new Date().toISOString() + ".pdf");
+                    });
+                    
+
+                    //Update the state of the form
                     textResponce.innerHTML = "Your " + _type + " is certified";
                     textResponce.style.color = "green";
                     form.style.borderColor = "green";
-
-                    //Get the certification data
-                    var dataKey2;
-                    if (_type == "pump")
-                        dataKey2 = drizzle.contracts.ElectricEngine.methods.getElectricPumpData(lotto).call();
-                    else
-                        dataKey2 = drizzle.contracts.ElectricPump.methods.getElectricEngineData(lotto).call();
-
-                    dataKey2.then(value => {
-                        //to do: create pdf
-                        console.log(value)
-
-                        
-                    });
-
                 }
                 else {
+                    //Update the state of the form
                     textResponce.innerHTML = "Your " + _type + " is NOT certified";
                     textResponce.style.color = "red";
                     form.style.borderColor = "red";
                 }
-            })
-        }
-        else {
+            });
+
+        } catch (e) {
+            //Print the error
+            console.log(e);
+            //Update the state of the form to the error state
             form.style.borderColor = "#EEEEEE";
-            textResponce.innerHTML = "Generic error";
+            textResponce.innerHTML = "Something went wrong";
             textResponce.style.color = "red";
-
-            console.log("Generic error");
         }
-
-        setTimeout(() => {
-            //Ripristino lo stato del form
-            form.style.borderColor = "#EEEEEE";
-            textResponce.innerHTML = "&nbsp;";
-            textResponce.style.color = "black";
-
-            updateViewPDF(false);
-        }, 10000);
-
-        generateEnginePdfDocument(lotto, lotto + ".pdf");
+        finally {
+            setTimeout(() => {
+                //Update the state of the form to the initial state after 10 seconds
+                form.style.borderColor = "#EEEEEE";
+                textResponce.innerHTML = "&nbsp;";
+                textResponce.style.color = "black";
+            }, 10000);
+        }
     }
 
     return (
