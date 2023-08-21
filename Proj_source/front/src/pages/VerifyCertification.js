@@ -1,25 +1,42 @@
 import React from 'react';
-import { useForm, SubmitHandler } from "react-hook-form";
+//import { useForm, SubmitHandler } from "react-hook-form";
 import ElectricEngine from './../artifacts/ElectricEngine.json' //import project contract
+import ElectricPump from './../artifacts/ElectricPump.json' //import project contract
 import { DrizzleContext } from '@drizzle/react-plugin';
 import { Drizzle } from "@drizzle/store";
-import { newContextComponents } from "@drizzle/react-components";
+//import { newContextComponents } from "@drizzle/react-components";
 import { useState } from 'react';
-import { useEffect } from 'react';
-import { useDrizzle, useDrizzleState } from '@drizzle/react-plugin';
-import { DrizzleProvider } from '@drizzle/react-plugin';
-import { DrizzleContextProvider } from '@drizzle/react-plugin';
-import { DrizzleContextConsumer } from '@drizzle/react-plugin';
+//import { useEffect } from 'react';
+//import { useDrizzle, useDrizzleState } from '@drizzle/react-plugin';
+//import { DrizzleProvider } from '@drizzle/react-plugin';
+//import { DrizzleContextProvider } from '@drizzle/react-plugin';
+//import { DrizzleContextConsumer } from '@drizzle/react-plugin';
+//import ReactDOM from 'react-dom';
+//import { PDFViewer } from '@react-pdf/renderer';
+import { PDFDownloadLink } from '@react-pdf/renderer';
 import './../index.css';
 import './../css/form.css';
 import Navbar from './/Navbar';
+import EngineDataPDF from './../component/pdfCreator';
+
+import { pdf } from "@react-pdf/renderer";
+import * as FileSaver from "file-saver";
 
 //Set contract in drizzle option
-const drizzleOptions = { contracts: [ElectricEngine], };
-const { AccountData, ContractData, ContractForm } = newContextComponents;
+const drizzleOptions = { contracts: [ElectricEngine, ElectricPump], };
+//const { AccountData, ContractData, ContractForm } = newContextComponents;
 const drizzle = new Drizzle(drizzleOptions);
 
 function VerifyCertification() {
+    //To manage the state of the pdf link
+    var [viewPDF, updateViewPDF] = React.useState(false);
+    const generateEnginePdfDocument = async (data, fileName) => {
+        const blob = await pdf(
+            <EngineDataPDF data={data}/>
+        ).toBlob();
+
+        FileSaver.saveAs(blob, fileName);
+    };
 
     //Permette di gestire i radio button
     var [_type, setType] = useState("engine");
@@ -39,7 +56,7 @@ function VerifyCertification() {
 
             //Call contract's method
             if (_type === "pump")
-                dataKey = drizzle.contracts.Pump.methods.isCertificatedPumps(lotto).call();
+                dataKey = drizzle.contracts.ElectricPump.methods.isCertificatedPump(lotto).call();
             else
                 dataKey = drizzle.contracts.ElectricEngine.methods.isCertificatedEngines(lotto).call();
 
@@ -49,6 +66,21 @@ function VerifyCertification() {
                     textResponce.innerHTML = "Your " + _type + " is certified";
                     textResponce.style.color = "green";
                     form.style.borderColor = "green";
+
+                    //Get the certification data
+                    var dataKey2;
+                    if (_type == "pump")
+                        dataKey2 = drizzle.contracts.ElectricEngine.methods.getElectricPumpData(lotto).call();
+                    else
+                        dataKey2 = drizzle.contracts.ElectricPump.methods.getElectricEngineData(lotto).call();
+
+                    dataKey2.then(value => {
+                        //to do: create pdf
+                        console.log(value)
+
+                        
+                    });
+
                 }
                 else {
                     textResponce.innerHTML = "Your " + _type + " is NOT certified";
@@ -64,8 +96,18 @@ function VerifyCertification() {
 
             console.log("Generic error");
         }
-    }
 
+        setTimeout(() => {
+            //Ripristino lo stato del form
+            form.style.borderColor = "#EEEEEE";
+            textResponce.innerHTML = "&nbsp;";
+            textResponce.style.color = "black";
+
+            updateViewPDF(false);
+        }, 10000);
+
+        generateEnginePdfDocument(lotto, lotto + ".pdf");
+    }
 
     return (
         <div>
@@ -87,12 +129,12 @@ function VerifyCertification() {
                                     <input className="mb-4 border-x-4 border-y-2 border-[#393E46] p-2 rounded-md focus:border-[#393E46] focus:ring-[#393E46] w-full" type="text" id="lotNumber" name="lotNumber" placeholder="Lot number" />
                                 </div>
                                 {/* Radio buttons */}
-                                <div class="flex pb-4">
-                                    <div class="flex items-center mr-4">
+                                <div className="flex pb-4">
+                                    <div className="flex items-center mr-4">
                                         <input type="radio" name="type" id="type_engine" value="engine" checked={_type === "engine"} onChange={onOptionChange} className="w-4 h-4 text-[#222831] focus:ring-[#222831] dark:focus:ring-[#222831] cursor-pointer" />
                                         <label htmlFor="type_engine" className="ml-2 cursor-pointer">Electric engine</label>
                                     </div>
-                                    <div class="flex items-center mr-4 cursor-pointer">
+                                    <div className="flex items-center mr-4 cursor-pointer">
                                         <input type="radio" name="type" id="type_pump" value="pump" checked={_type === "pump"} onChange={onOptionChange} className="w-4 h-4 text-[#222831] focus:ring-[#222831] dark:focus:ring-[#222831] cursor-pointer" />
                                         <label htmlFor="type_pump" className="ml-2 cursor-pointer">Pump</label>
                                     </div>
