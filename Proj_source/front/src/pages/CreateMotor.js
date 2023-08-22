@@ -1,5 +1,6 @@
 import React from 'react';
-import ElectricEngine from './../artifacts/ElectricEngine.json' //import project contract
+import ElectricEngine from './../artifacts/ElectricEngine.json'
+import ElectricPump from './../artifacts/ElectricPump.json' 
 import { DrizzleContext } from '@drizzle/react-plugin';
 import { Drizzle } from "@drizzle/store";
 /*
@@ -16,7 +17,7 @@ import './../index.css';
 import './../css/form.css';
 
 //Set contract in drizzle option
-const drizzleOptions = { contracts: [ElectricEngine], };
+const drizzleOptions = { contracts: [ElectricEngine, ElectricPump], };
 //const { AccountData, ContractData, ContractForm } = newContextComponents;
 const drizzle = new Drizzle(drizzleOptions);
 
@@ -65,7 +66,7 @@ function add_m(item) {
         lotto.style.borderColor = "green";
         lotto.value = "";
         button.disabled = true;
-        title.textContent += " - Done!";
+        //title.textContent += " - Done!";
     }
     else {
         lotto.style.borderColor = "red";
@@ -136,7 +137,8 @@ function certify(item) {
         fatt.value = "";
         producer.value = "";
         button.disabled = true;
-        title.textContent += " - Done!";
+
+        //title.textContent += " - Done!";
     }
     else {
         fatt.style.borderColor = "red";
@@ -222,7 +224,7 @@ function certifyEngine() {
         y.value = "";
         object.value = "";
         button.disabled = true;
-        title.textContent += " - Done!";
+        //title.textContent += " - Done!";
     }
     else {
         threads.style.borderColor = "red";
@@ -284,11 +286,8 @@ function CreateMotor() {
             console.log(error);
         }
     }
-
-    /*}
     else
-        alert("Drizzle not initialized");
-    {*/
+        console.log("Drizzle not initialized");
 
     return (
         <div>
