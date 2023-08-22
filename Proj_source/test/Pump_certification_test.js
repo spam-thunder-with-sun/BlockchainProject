@@ -1,4 +1,4 @@
-//Pump certification test
+//Pump certificate tests
 
 const el = artifacts.require("ElectricEngine");
 const pu = artifacts.require("ElectricPump");

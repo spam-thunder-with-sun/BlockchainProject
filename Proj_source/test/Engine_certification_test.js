@@ -1,4 +1,4 @@
-//Test certificate with a producer and a tester
+//Engine certificate tests
 
 const project = artifacts.require("ElectricEngine");
 const assert = require("chai").assert;
