@@ -63,7 +63,7 @@ const EngineDataPDF = (data) => {
   let fr = data.data[5];
   let Y = data.data[6];
 
-  const LottoStr = () => `Lotto Serial Number: ${lott_num}`;
+  const LottoStr = () => `Lot Serial Number: ${lott_num}`;
   const ThreadFattStr = () => `Thread Invoice number:  ${thread_fatt}`;
   const CageFattStr = () => `Cage Invoice number:  ${cage_fatt}`;
   const TempStr = () => `Max Temperature:  ${temp} °C`;
@@ -104,11 +104,11 @@ const PumpDataPDF = (data) => {
   let temp = data.data[6];
   let engine_lott = data.data[7];
 
-  const LottoStr = () => `Lotto Serial Number: ${lott_num}`;
+  const LottoStr = () => `Lot Serial Number: ${lott_num}`;
   const BodyFattStr = () => `Body Invoice number:  ${body_fatt}`;
   const EngineFattStr = () => {
     if (engine_fatt === "0")
-      return `Engine Lotto Serial Number:  ${engine_lott}`;
+      return `Engine Lot Serial Number:  ${engine_lott}`;
     else
       return `Engine Invoice number:  ${engine_fatt}`;
   }

@@ -5,11 +5,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import reportWebVitals from './reportWebVitals';
-
-
 import './index.css';
-
-import App from './App';
 import Home from './pages/Home';
 import VerifyCertification from './pages/VerifyCertification';
 import AboutUs from './pages/AboutUs';
@@ -48,10 +44,6 @@ const router = createBrowserRouter([
     path: "/admin",
     element: <Admin />,
   },
-  {
-    path: "/old",
-    element: <App />,
-  }
 ]);
 
 //Set contract in drizzle option
@@ -67,7 +59,7 @@ root.render(
         {drizzleContext => {
           const { drizzle, drizzleState, initialized } = drizzleContext;
           if (!initialized) {
-            return "Loading..."
+            return ""
           }
           return (
             <RouterProvider router={router} drizzle={drizzle} drizzleState={drizzleState} />

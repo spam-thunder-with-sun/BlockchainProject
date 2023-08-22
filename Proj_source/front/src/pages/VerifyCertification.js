@@ -136,7 +136,7 @@ function VerifyCertification() {
                     <form className="form flex rounded-lg w-1/2 mt-8 min-w-[650px]" id="myform" onSubmit={(event) => { event.preventDefault(); }}>
                         <div className="flex-1 px-16 py-8">
                             <h1 className="text-3xl pb-2 text-center font-bold">
-                                Verify here if your engine or your pump is certified
+                                Verify here if your Engine or your Pump is certified
                             </h1>
                             <br></br>
                             <p className="">Please insert the lot number and click on the "Verify" button</p>

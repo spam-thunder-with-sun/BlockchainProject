@@ -1,6 +1,6 @@
 import React from 'react';
 import ElectricEngine from './../artifacts/ElectricEngine.json'
-import ElectricPump from './../artifacts/ElectricPump.json' 
+import ElectricPump from './../artifacts/ElectricPump.json'
 import { DrizzleContext } from '@drizzle/react-plugin';
 import { Drizzle } from "@drizzle/store";
 import Navbar from './Navbar';
@@ -68,7 +68,10 @@ function add_m(item) {
         //Ripristino lo stato del form
         lotto.style.borderColor = "#393E46";
         button.disabled = false;
-        title.textContent = "Add " + item;
+        if(item === "m1")
+            title.textContent = "Add Producer";
+        else if(item === "m2")
+            title.textContent = "Add Tester";
     }, 5000);
 }
 
@@ -237,14 +240,32 @@ function certifyEngine() {
     }, 5000);
 }
 
-function CreateMotor() {
+//Roles
+var isM1, updateM1, isM2, updateM2, isCertifier, updateCertifier;
 
-    var [isM1, updateM1] = React.useState(false);
-    var [isM2, updateM2] = React.useState(false);
-    var [isCertifier, updateCertifier] = React.useState(false);
-
+function ResignRole(item) {
     var state = drizzle.store.getState();
 
+    // If Drizzle is initialized (and therefore web3, accounts and contracts), continue.
+    if (state.drizzleStatus.initialized) {
+        try {
+            if (item === "m1") {
+                drizzle.contracts.ElectricEngine.methods.delm1.cacheSend();
+            }
+            else if (item === "m2") {
+                drizzle.contracts.ElectricEngine.methods.delm2.cacheSend();
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    else
+        console.log("Drizzle not initialized");
+}
+
+function getRole() {
+    console.log("Get role");
+    var state = drizzle.store.getState();
     // If Drizzle is initialized (and therefore web3, accounts and contracts), continue.
     if (state.drizzleStatus.initialized) {
         try {
@@ -261,8 +282,8 @@ function CreateMotor() {
             prom_isM2.then(value => {
                 updateM2(value);
                 //console.log("Is M2: " + isM2);
-            });            
-            
+            });
+
             prom_isCertifier.then(value => {
                 updateCertifier(value);
                 //console.log("Is Certifier: " + isCertifier);
@@ -274,6 +295,16 @@ function CreateMotor() {
     }
     else
         console.log("Drizzle not initialized");
+}
+
+function CreateMotor() {
+
+    [isM1, updateM1] = React.useState(false);
+    [isM2, updateM2] = React.useState(false);
+    [isCertifier, updateCertifier] = React.useState(false);
+
+    //Get the role of the user
+    getRole();
 
     return (
         <div>
@@ -283,28 +314,28 @@ function CreateMotor() {
                     <form className="form flex rounded-lg w-1/2 my-8 min-w-[650px]" id="myform" onSubmit={(event) => { event.preventDefault(); }}>
                         <div className="flex-1 px-16 py-8">
                             <h1 className="text-3xl pb-2 text-center font-bold">
-                                Create Motor here
+                                Certificate Electric Engine here
                             </h1>
                             <br></br>
                             <p className="">Please insert the data of your engine and click on the button</p>
                             <p className="text-center font-bold" id="responce">&nbsp;</p>
-                            {/* M1 */}
+                            {/* Producer */}
                             <div className="" style={{ display: isCertifier ? 'block' : 'none' }}>
-                                <p htmlFor="m1_input" className="indent-1 font-semibold mb-1" id="m1_title">Add m1</p>
+                                <p htmlFor="m1_input" className="indent-1 font-semibold mb-1" id="m1_title">Add Producer</p>
                                 <div className="pb-4 space-x-4 hidden sm:flex">
                                     <input
                                         className="border-x-4 border-y-2 border-[#393E46] p-2 rounded-md w-1/2 focus:border-[#393E46] focus:ring-[#393E46] w-5/6"
-                                        type="text" id="m1_input" placeholder="M1 number" />
+                                        type="text" id="m1_input" placeholder="Producer address" />
                                     <button type="button" onClick={add_m.bind(this, "m1")} className="bg-teal text-sm rounded-lg px-4 py-3 text-[#EEEEEE] w-1/6 ml-1 hover:bg-[#222831]" id="m1_button">Go!</button>
                                 </div>
                             </div>
-                            {/* M2 */}
+                            {/* Tester */}
                             <div className="" style={{ display: isCertifier ? 'block' : 'none' }}>
-                                <p htmlFor="m2_input" className="indent-1 font-semibold mb-1" id="m2_title">Add m2</p>
+                                <p htmlFor="m2_input" className="indent-1 font-semibold mb-1" id="m2_title">Add Tester</p>
                                 <div className="pb-4 space-x-4 hidden sm:flex">
                                     <input
                                         className="border-x-4 border-y-2 border-[#393E46] p-2 rounded-md w-1/2 focus:border-[#393E46] focus:ring-[#393E46] w-5/6"
-                                        type="text" id="m2_input" placeholder="M2 number" />
+                                        type="text" id="m2_input" placeholder="Tester address" />
                                     <button type="button" onClick={add_m.bind(this, "m2")} className="bg-teal text-sm rounded-lg px-4 py-3 text-[#EEEEEE] w-1/6 ml-1 hover:bg-[#222831]" id="m2_button">Go!</button>
                                 </div>
                             </div>
@@ -337,7 +368,7 @@ function CreateMotor() {
                                 <input className="mb-4 border-x-4 border-y-2 border-[#393E46] p-2 rounded-md focus:border-[#393E46] focus:ring-[#393E46] w-full" type="number" id="engine_voltage" placeholder="Nominal Voltage (V)" />
                                 <input className="mb-4 border-x-4 border-y-2 border-[#393E46] p-2 rounded-md focus:border-[#393E46] focus:ring-[#393E46] w-full" type="number" id="engine_frequency" placeholder="Nominal Frequency (Hz)" />
                                 <input className="mb-4 border-x-4 border-y-2 border-[#393E46] p-2 rounded-md focus:border-[#393E46] focus:ring-[#393E46] w-full" type="number" id="engine_y" placeholder="Motor Configuration" />
-                                <input className="mb-4 border-x-4 border-y-2 border-[#393E46] p-2 rounded-md focus:border-[#393E46] focus:ring-[#393E46] w-full" type="text" id="engine_object" placeholder="Lotto Serial Number" />
+                                <input className="mb-4 border-x-4 border-y-2 border-[#393E46] p-2 rounded-md focus:border-[#393E46] focus:ring-[#393E46] w-full" type="text" id="engine_object" placeholder="Lot Serial Number" />
                                 <div className="items-center flex justify-center">
                                     <button type="button" onClick={certifyEngine} className="bg-teal text-sm rounded-lg px-4 py-3 text-[#EEEEEE] w-1/6 ml-1 hover:bg-[#222831]" id="engine_button">Go!</button>
                                 </div>
@@ -345,6 +376,10 @@ function CreateMotor() {
                             </div>
                         </div>
                     </form>
+                    <div className="fixed bottom-0 right-0 my-4 mx-8">
+                        <p style={{ display: isM1 ? 'block' : 'none' }} className="text-red-500 underline font-semibold cursor-pointer text-right" onClick={ResignRole.bind(this, "m1")}>Resign Producer Role</p>
+                        <p style={{ display: isM2 ? 'block' : 'none' }} className="text-red-500 underline font-semibold cursor-pointer text-right" onClick={ResignRole.bind(this, "m2")}>Resign Tester Role</p>
+                    </div>
                 </div>
             </DrizzleContext.Provider>
         </div>
