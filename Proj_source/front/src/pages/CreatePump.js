@@ -1,22 +1,15 @@
 import React from 'react';
-import ElectricEngine from '../artifacts/ElectricEngine.json' //import project contract
+import ElectricEngine from './../artifacts/ElectricEngine.json'
+import ElectricPump from './../artifacts/ElectricPump.json'
 import { DrizzleContext } from '@drizzle/react-plugin';
 import { Drizzle } from "@drizzle/store";
-/*
-import { useForm, SubmitHandler } from "react-hook-form";
-import { newContextComponents } from "@drizzle/react-components";
-import { useState, useEffect } from 'react';
-import { useDrizzle, useDrizzleState } from '@drizzle/react-plugin';
-import { DrizzleProvider } from '@drizzle/react-plugin';
-import { DrizzleContextProvider } from '@drizzle/react-plugin';
-import { DrizzleContextConsumer } from '@drizzle/react-plugin';
-*/
+import { useState } from 'react';
 import Navbar from './Navbar';
 import './../index.css';
 import './../css/form.css';
 
 //Set contract in drizzle option
-const drizzleOptions = { contracts: [ElectricEngine], };
+const drizzleOptions = { contracts: [ElectricEngine, ElectricPump], };
 //const { AccountData, ContractData, ContractForm } = newContextComponents;
 const drizzle = new Drizzle(drizzleOptions);
 
@@ -39,11 +32,11 @@ function add_m(item) {
         if (state.drizzleStatus.initialized) {
             try {
                 if (item === "m1") {
-                    drizzle.contracts.ElectricEngine.methods.addm1(lotto_input).send();
+                    drizzle.contracts.ElectricPump.methods.addm1.cacheSend(lotto_input);
                     success = true;
                 }
                 else if (item === "m2") {
-                    drizzle.contracts.ElectricEngine.methods.addm2(lotto_input).send();
+                    drizzle.contracts.ElectricPump.methods.addm2.cacheSend(lotto_input);
                     success = true;
                 }
 
@@ -65,7 +58,7 @@ function add_m(item) {
         lotto.style.borderColor = "green";
         lotto.value = "";
         button.disabled = true;
-        title.textContent += " - Done!";
+        //title.textContent += " - Done!";
     }
     else {
         lotto.style.borderColor = "red";
@@ -105,18 +98,16 @@ function certify(item) {
         // If Drizzle is initialized (and therefore web3, accounts and contracts), continue.
         if (state.drizzleStatus.initialized) {
             try {
-                if (item === "threads") {
-                    console.log("Certify threads " + fatt_input + " " + producer_input);
-                    drizzle.contracts.ElectricEngine.methods.certificateThreads(fatt_input, producer_input).send();
+                if (item === "body") {
+                    console.log("Certify body " + fatt_input + " " + producer_input);
+                    drizzle.contracts.ElectricPump.methods.certificateBody.cacheSend(fatt_input, producer_input);
                     success = true;
                 }
-                else if (item === "cages") {
-                    console.log("Certify cages " + fatt_input + " " + producer_input);
-                    drizzle.contracts.ElectricEngine.methods.certificateCage(fatt_input, producer_input).send();
+                else if (item === "engine") {
+                    console.log("Certify engine " + fatt_input + " " + producer_input);
+                    drizzle.contracts.ElectricPump.methods.certificateEngine.cacheSend(fatt_input, producer_input);
                     success = true;
                 }
-
-                //drizzle.contracts.ElectricEngine.methods.
 
             } catch (error) {
                 console.log(error);
@@ -136,7 +127,8 @@ function certify(item) {
         fatt.value = "";
         producer.value = "";
         button.disabled = true;
-        title.textContent += " - Done!";
+
+        //title.textContent += " - Done!";
     }
     else {
         fatt.style.borderColor = "red";
@@ -153,46 +145,55 @@ function certify(item) {
     }, 5000);
 }
 
-function certifyEngine() {
+function certifyPump(withEngine) {
     var state = drizzle.store.getState();
-    var threads = document.getElementById("engine_threads");
-    var cages = document.getElementById("engine_cages");
-    var temperature = document.getElementById("engine_temperature");
-    var voltage = document.getElementById("engine_voltage");
-    var frequency = document.getElementById("engine_frequency");
-    var y = document.getElementById("engine_y");
-    var object = document.getElementById("engine_object");
-    var button = document.getElementById("engine_button");
-    //var text = document.getElementById("engine_text");
-    var title = document.getElementById("engine_title");
+    var body = document.getElementById("pump_body");
+    var engine = document.getElementById("pump_engine");
+    var frequency = document.getElementById("pump_frequency");
+    var speed = document.getElementById("pump_speed");
+    var depth = document.getElementById("pump_depth");
+    var temperature = document.getElementById("pump_temperature");
+    var object = document.getElementById("pump_object");
+    var button = document.getElementById("pump_button");
+    //var text = document.getElementById("pump_text");
+    var title = document.getElementById("pump_title");
     var success = false;
 
     //Ripristino lo stato del form
-    threads.style.borderColor = "#393E46";
-    cages.style.borderColor = "#393E46";
-    temperature.style.borderColor = "#393E46";
-    voltage.style.borderColor = "#393E46";
+    body.style.borderColor = "#393E46";
+    engine.style.borderColor = "#393E46";
     frequency.style.borderColor = "#393E46";
-    y.style.borderColor = "#393E46";
+    speed.style.borderColor = "#393E46";
+    depth.style.borderColor = "#393E46";
+    temperature.style.borderColor = "#393E46";
     object.style.borderColor = "#393E46";
 
     //Controllo dell'input
     var inputOk = true;
-    inputOk = inputOk && threads.value !== "" && threads.value !== null && threads.value !== undefined;
-    inputOk = inputOk && cages.value !== "" && cages.value !== null && cages.value !== undefined;
-    inputOk = inputOk && temperature.value !== "" && temperature.value !== null && temperature.value !== undefined;
-    inputOk = inputOk && voltage.value !== "" && voltage.value !== null && voltage.value !== undefined;
+    inputOk = inputOk && body.value !== "" && body.value !== null && body.value !== undefined;
+    inputOk = inputOk && engine.value !== "" && engine.value !== null && engine.value !== undefined;
     inputOk = inputOk && frequency.value !== "" && frequency.value !== null && frequency.value !== undefined;
-    inputOk = inputOk && y.value !== "" && y.value !== null && y.value !== undefined;
+    inputOk = inputOk && speed.value !== "" && speed.value !== null && speed.value !== undefined;
+    inputOk = inputOk && depth.value !== "" && depth.value !== null && depth.value !== undefined;
+    inputOk = inputOk && temperature.value !== "" && temperature.value !== null && temperature.value !== undefined;
     inputOk = inputOk && object.value !== "" && object.value !== null && object.value !== undefined;
 
     if (inputOk) {
         // If Drizzle is initialized (and therefore web3, accounts and contracts), continue.
         if (state.drizzleStatus.initialized) {
             try {
-                console.log("Certify engine " + threads.value + " " + cages.value + " " + temperature.value + " " + voltage.value + " " + frequency.value + " " + y.value + " " + object.value);
-                drizzle.contracts.ElectricEngine.methods.certificateEngines(cages.value, threads.value, temperature.value, voltage.value, frequency.value, y.value, object.value).send();
-                success = true;
+                console.log("Certify pump " + body.value + " " + engine.value + " " + frequency.value + " " + speed.value + " " + depth.value + " " + temperature.value + " " + object.value);
+
+                if (withEngine === "true") {
+                    console.log("Certify pump with engine");
+                    drizzle.contracts.ElectricPump.methods.certificatePumpT.cacheSend(body.value, engine.value, frequency.value, speed.value, depth.value, temperature.value, object.value);
+                    success = true;
+                }
+                else {
+                    console.log("Certify pump without engine");
+                    drizzle.contracts.ElectricPump.methods.certificatePumpA.cacheSend(body.value, engine.value, frequency.value, speed.value, depth.value, temperature.value, object.value);
+                    success = true;
+                }
 
             } catch (error) {
                 console.log(error);
@@ -207,62 +208,66 @@ function certifyEngine() {
 
     //Modifico la form in base al risultato
     if (success) {
-        threads.style.borderColor = "green";
-        cages.style.borderColor = "green";
-        temperature.style.borderColor = "green";
-        voltage.style.borderColor = "green";
+        body.style.borderColor = "green";
+        engine.style.borderColor = "green";
         frequency.style.borderColor = "green";
-        y.style.borderColor = "green";
+        speed.style.borderColor = "green";
+        depth.style.borderColor = "green";
+        temperature.style.borderColor = "green";
         object.style.borderColor = "green";
-        threads.value = "";
-        cages.value = "";
-        temperature.value = "";
-        voltage.value = "";
+        body.value = "";
+        engine.value = "";
         frequency.value = "";
-        y.value = "";
+        speed.value = "";
+        depth.value = "";
+        temperature.value = "";
         object.value = "";
         button.disabled = true;
-        title.textContent += " - Done!";
+        //title.textContent += " - Done!";
     }
     else {
-        threads.style.borderColor = "red";
-        cages.style.borderColor = "red";
-        temperature.style.borderColor = "red";
-        voltage.style.borderColor = "red";
+        body.style.borderColor = "red";
+        engine.style.borderColor = "red";
         frequency.style.borderColor = "red";
-        y.style.borderColor = "red";
+        speed.style.borderColor = "red";
+        depth.style.borderColor = "red";
+        temperature.style.borderColor = "red";
         object.style.borderColor = "red";
         title.textContent += " - Error!";
     }
 
     setTimeout(() => {
         //Ripristino lo stato del form
-        threads.style.borderColor = "#393E46";
-        cages.style.borderColor = "#393E46";
-        temperature.style.borderColor = "#393E46";
-        voltage.style.borderColor = "#393E46";
+        body.style.borderColor = "#393E46";
+        engine.style.borderColor = "#393E46";
         frequency.style.borderColor = "#393E46";
-        y.style.borderColor = "#393E46";
+        speed.style.borderColor = "#393E46";
+        depth.style.borderColor = "#393E46";
+        temperature.style.borderColor = "#393E46";
         object.style.borderColor = "#393E46";
         button.disabled = false;
-        title.textContent = "Certify engine";
+        title.textContent = "Certify pump";
     }, 5000);
 }
 
-function CreatePump() {
+function CreateMotor() {
 
     var [isM1, updateM1] = React.useState(false);
     var [isM2, updateM2] = React.useState(false);
     var [isCertifier, updateCertifier] = React.useState(false);
+
+    //To manage the state of the radio buttons
+    var [withEngine, setWithEngine] = useState("true");
+    const onOptionChange = e => { setWithEngine(e.target.value) };
 
     var state = drizzle.store.getState();
 
     // If Drizzle is initialized (and therefore web3, accounts and contracts), continue.
     if (state.drizzleStatus.initialized) {
         try {
-            let prom_isM1 = drizzle.contracts.ElectricEngine.methods.isM1().call();
-            let prom_isM2 = drizzle.contracts.ElectricEngine.methods.isM2().call();
-            let prom_isCertifier = drizzle.contracts.ElectricEngine.methods.isCertifier_().call();
+            let prom_isM1 = drizzle.contracts.ElectricPump.methods.isM1().call();
+            let prom_isM2 = drizzle.contracts.ElectricPump.methods.isM2().call();
+            let prom_isCertifier = drizzle.contracts.ElectricPump.methods.isCertifier_().call();
 
             //Visualize the answer
             prom_isM1.then(value => {
@@ -273,8 +278,8 @@ function CreatePump() {
             prom_isM2.then(value => {
                 updateM2(value);
                 //console.log("Is M2: " + isM2);
-            });            
-            
+            });
+
             prom_isCertifier.then(value => {
                 updateCertifier(value);
                 //console.log("Is Certifier: " + isCertifier);
@@ -284,11 +289,8 @@ function CreatePump() {
             console.log(error);
         }
     }
-
-    /*}
     else
-        alert("Drizzle not initialized");
-    {*/
+        console.log("Drizzle not initialized");
 
     return (
         <div>
@@ -301,7 +303,7 @@ function CreatePump() {
                                 Create Pump here
                             </h1>
                             <br></br>
-                            <p className="">Please insert the data of your engine and click on the button</p>
+                            <p className="">Please insert the data of your pump and click on the button</p>
                             <p className="text-center font-bold" id="responce">&nbsp;</p>
                             {/* M1 */}
                             <div className="" style={{ display: isCertifier ? 'block' : 'none' }}>
@@ -323,40 +325,51 @@ function CreatePump() {
                                     <button type="button" onClick={add_m.bind(this, "m2")} className="bg-teal text-sm rounded-lg px-4 py-3 text-[#EEEEEE] w-1/6 ml-1 hover:bg-[#222831]" id="m2_button">Go!</button>
                                 </div>
                             </div>
-                            {/* Certify threads */}
+                            {/* Certify body */}
                             <div className="" style={{ display: isM1 ? 'block' : 'none' }}>
-                                <p className="indent-1 font-semibold mb-1" id="threads_title">Certify threads</p>
+                                <p className="indent-1 font-semibold mb-1" id="body_title">Certify body</p>
                                 <div className="space-x-4 hidden sm:flex">
-                                    <input className="border-x-4 border-y-2 border-[#393E46] p-2 rounded-md focus:border-[#393E46] focus:ring-[#393E46] " type="number" id="threads_fatt" placeholder="Invoice" />
-                                    <input className="border-x-4 border-y-2 border-[#393E46] p-2 rounded-md focus:border-[#393E46] focus:ring-[#393E46]" type="text" id="threads_producer" placeholder="Producer" />
-                                    <button type="button" onClick={certify.bind(this, "threads")} className="bg-teal text-sm rounded-lg px-4 py-3 text-[#EEEEEE] w-1/6 ml-1 hover:bg-[#222831]" id="threads_button">Go!</button>
+                                    <input className="border-x-4 border-y-2 border-[#393E46] p-2 rounded-md focus:border-[#393E46] focus:ring-[#393E46] " type="number" id="body_fatt" placeholder="Invoice" />
+                                    <input className="border-x-4 border-y-2 border-[#393E46] p-2 rounded-md focus:border-[#393E46] focus:ring-[#393E46]" type="text" id="body_producer" placeholder="Producer" />
+                                    <button type="button" onClick={certify.bind(this, "body")} className="bg-teal text-sm rounded-lg px-4 py-3 text-[#EEEEEE] w-1/6 ml-1 hover:bg-[#222831]" id="body_button">Go!</button>
                                 </div>
-                                <p className="indent-1" id="threads_text">&nbsp;</p>
-                            </div>
-                            {/* Certify cages */}
-                            <div className="" style={{ display: isM1 ? 'block' : 'none' }}>
-                                <p className="indent-1 font-semibold mb-1" id="cages_title">Certify cages</p>
-                                <div className=" space-x-4 hidden sm:flex">
-                                    <input className="border-x-4 border-y-2 border-[#393E46] p-2 rounded-md focus:border-[#393E46] focus:ring-[#393E46] " type="number" id="cages_fatt" placeholder="Invoice" />
-                                    <input className="border-x-4 border-y-2 border-[#393E46] p-2 rounded-md focus:border-[#393E46] focus:ring-[#393E46]" type="text" id="cages_producer" placeholder="Producer" />
-                                    <button type="button" onClick={certify.bind(this, "cages")} className="bg-teal text-sm rounded-lg px-4 py-3 text-[#EEEEEE] w-1/6 ml-1 hover:bg-[#222831]" id="cages_button">Go!</button>
-                                </div>
-                                <p className="indent-1" id="cages_text">&nbsp;</p>
+                                <p className="indent-1" id="body_text">&nbsp;</p>
                             </div>
                             {/* Certify engine */}
-                            <div className="" style={{ display: isM2 ? 'block' : 'none' }}>
+                            <div className="" style={{ display: isM1 ? 'block' : 'none' }}>
                                 <p className="indent-1 font-semibold mb-1" id="engine_title">Certify engine</p>
-                                <input className="mb-4 border-x-4 border-y-2 border-[#393E46] p-2 rounded-md focus:border-[#393E46] focus:ring-[#393E46] w-full" type="number" id="engine_threads" placeholder="Threads Invoice" />
-                                <input className="mb-4 border-x-4 border-y-2 border-[#393E46] p-2 rounded-md focus:border-[#393E46] focus:ring-[#393E46] w-full" type="number" id="engine_cages" placeholder="Cages Invoice" />
-                                <input className="mb-4 border-x-4 border-y-2 border-[#393E46] p-2 rounded-md focus:border-[#393E46] focus:ring-[#393E46] w-full" type="number" id="engine_temperature" placeholder="Temperature" />
-                                <input className="mb-4 border-x-4 border-y-2 border-[#393E46] p-2 rounded-md focus:border-[#393E46] focus:ring-[#393E46] w-full" type="number" id="engine_voltage" placeholder="Voltage" />
-                                <input className="mb-4 border-x-4 border-y-2 border-[#393E46] p-2 rounded-md focus:border-[#393E46] focus:ring-[#393E46] w-full" type="number" id="engine_frequency" placeholder="Frequency" />
-                                <input className="mb-4 border-x-4 border-y-2 border-[#393E46] p-2 rounded-md focus:border-[#393E46] focus:ring-[#393E46] w-full" type="number" id="engine_y" placeholder="Y" />
-                                <input className="mb-4 border-x-4 border-y-2 border-[#393E46] p-2 rounded-md focus:border-[#393E46] focus:ring-[#393E46] w-full" type="text" id="engine_object" placeholder="Object" />
-                                <div className="items-center flex justify-center">
-                                    <button type="button" onClick={certifyEngine} className="bg-teal text-sm rounded-lg px-4 py-3 text-[#EEEEEE] w-1/6 ml-1 hover:bg-[#222831]" id="engine_button">Go!</button>
+                                <div className="space-x-4 hidden sm:flex">
+                                    <input className="border-x-4 border-y-2 border-[#393E46] p-2 rounded-md focus:border-[#393E46] focus:ring-[#393E46] " type="number" id="engine_fatt" placeholder="Invoice" />
+                                    <input className="border-x-4 border-y-2 border-[#393E46] p-2 rounded-md focus:border-[#393E46] focus:ring-[#393E46]" type="text" id="engine_producer" placeholder="Producer" />
+                                    <button type="button" onClick={certify.bind(this, "engine")} className="bg-teal text-sm rounded-lg px-4 py-3 text-[#EEEEEE] w-1/6 ml-1 hover:bg-[#222831]" id="engine_button">Go!</button>
                                 </div>
                                 <p className="indent-1" id="engine_text">&nbsp;</p>
+                            </div>
+                            {/* Certify pump */}
+                            <div className="" style={{ display: isM2 ? 'block' : 'none' }}>
+                                <p className="indent-1 font-semibold mb-1" id="pump_title">Certify pump</p>
+                                {/* Radio buttons */}
+                                <div className="flex pb-4">
+                                    <div className="flex items-center mr-4">
+                                        <input type="radio" name="type" id="type_engine" value="true" checked={withEngine === "true"} onChange={onOptionChange} className="w-4 h-4 text-[#222831] focus:ring-[#222831] dark:focus:ring-[#222831] cursor-pointer" />
+                                        <label htmlFor="type_engine" className="ml-2 cursor-pointer">With Engine Lotto Serial Number</label>
+                                    </div>
+                                    <div className="flex items-center mr-4 cursor-pointer">
+                                        <input type="radio" name="type" id="type_pump" value="false" checked={withEngine === "false"} onChange={onOptionChange} className="w-4 h-4 text-[#222831] focus:ring-[#222831] dark:focus:ring-[#222831] cursor-pointer" />
+                                        <label htmlFor="type_pump" className="ml-2 cursor-pointer">With Engine Invoice</label>
+                                    </div>
+                                </div>
+                                <input className="mb-4 border-x-4 border-y-2 border-[#393E46] p-2 rounded-md focus:border-[#393E46] focus:ring-[#393E46] w-full" type="number" id="pump_body" placeholder="Body Invoice" />
+                                <input className="mb-4 border-x-4 border-y-2 border-[#393E46] p-2 rounded-md focus:border-[#393E46] focus:ring-[#393E46] w-full" type="text" id="pump_engine" placeholder={withEngine === "true" ? 'Engine Lotto Serial Number' : 'Engine Invoice'} />
+                                <input className="mb-4 border-x-4 border-y-2 border-[#393E46] p-2 rounded-md focus:border-[#393E46] focus:ring-[#393E46] w-full" type="number" id="pump_frequency" placeholder="Nominal Frequency (Hz)" />
+                                <input className="mb-4 border-x-4 border-y-2 border-[#393E46] p-2 rounded-md focus:border-[#393E46] focus:ring-[#393E46] w-full" type="number" id="pump_speed" placeholder="Speed at full capacity (RPM)" />
+                                <input className="mb-4 border-x-4 border-y-2 border-[#393E46] p-2 rounded-md focus:border-[#393E46] focus:ring-[#393E46] w-full" type="number" id="pump_depth" placeholder="Max depth (m)" />
+                                <input className="mb-4 border-x-4 border-y-2 border-[#393E46] p-2 rounded-md focus:border-[#393E46] focus:ring-[#393E46] w-full" type="number" id="pump_temperature" placeholder="Temperature (°C)" />
+                                <input className="mb-4 border-x-4 border-y-2 border-[#393E46] p-2 rounded-md focus:border-[#393E46] focus:ring-[#393E46] w-full" type="text" id="pump_object" placeholder="Lotto Serial Number" />
+                                <div className="items-center flex justify-center">
+                                    <button type="button" onClick={certifyPump.bind(this, withEngine)} className="bg-teal text-sm rounded-lg px-4 py-3 text-[#EEEEEE] w-1/6 ml-1 hover:bg-[#222831]" id="pump_button">Go!</button>
+                                </div>
+                                <p className="indent-1" id="pump_text">&nbsp;</p>
                             </div>
                         </div>
                     </form>
@@ -366,4 +379,4 @@ function CreatePump() {
     );
 }
 
-export default CreatePump;
+export default CreateMotor;

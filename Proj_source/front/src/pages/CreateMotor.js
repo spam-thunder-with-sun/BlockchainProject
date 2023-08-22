@@ -3,15 +3,6 @@ import ElectricEngine from './../artifacts/ElectricEngine.json'
 import ElectricPump from './../artifacts/ElectricPump.json' 
 import { DrizzleContext } from '@drizzle/react-plugin';
 import { Drizzle } from "@drizzle/store";
-/*
-import { useForm, SubmitHandler } from "react-hook-form";
-import { newContextComponents } from "@drizzle/react-components";
-import { useState, useEffect } from 'react';
-import { useDrizzle, useDrizzleState } from '@drizzle/react-plugin';
-import { DrizzleProvider } from '@drizzle/react-plugin';
-import { DrizzleContextProvider } from '@drizzle/react-plugin';
-import { DrizzleContextConsumer } from '@drizzle/react-plugin';
-*/
 import Navbar from './Navbar';
 import './../index.css';
 import './../css/form.css';
@@ -40,11 +31,11 @@ function add_m(item) {
         if (state.drizzleStatus.initialized) {
             try {
                 if (item === "m1") {
-                    drizzle.contracts.ElectricEngine.methods.addm1(lotto_input).send();
+                    drizzle.contracts.ElectricEngine.methods.addm1.cacheSend(lotto_input);
                     success = true;
                 }
                 else if (item === "m2") {
-                    drizzle.contracts.ElectricEngine.methods.addm2(lotto_input).send();
+                    drizzle.contracts.ElectricEngine.methods.addm2.cacheSend(lotto_input);
                     success = true;
                 }
 
@@ -107,18 +98,13 @@ function certify(item) {
         if (state.drizzleStatus.initialized) {
             try {
                 if (item === "threads") {
-                    console.log("Certify threads " + fatt_input + " " + producer_input);
-                    drizzle.contracts.ElectricEngine.methods.certificateThreads(fatt_input, producer_input).send();
+                    drizzle.contracts.ElectricEngine.methods.certificateThreads.cacheSend(fatt_input, producer_input);
                     success = true;
                 }
                 else if (item === "cages") {
-                    console.log("Certify cages " + fatt_input + " " + producer_input);
-                    drizzle.contracts.ElectricEngine.methods.certificateCage(fatt_input, producer_input).send();
+                    drizzle.contracts.ElectricEngine.methods.certificateCage.cacheSend(fatt_input, producer_input);
                     success = true;
                 }
-
-                //drizzle.contracts.ElectricEngine.methods.
-
             } catch (error) {
                 console.log(error);
             }
@@ -193,7 +179,7 @@ function certifyEngine() {
         if (state.drizzleStatus.initialized) {
             try {
                 console.log("Certify engine " + threads.value + " " + cages.value + " " + temperature.value + " " + voltage.value + " " + frequency.value + " " + y.value + " " + object.value);
-                drizzle.contracts.ElectricEngine.methods.certificateEngines(cages.value, threads.value, temperature.value, voltage.value, frequency.value, y.value, object.value).send();
+                drizzle.contracts.ElectricEngine.methods.certificateEngines.cacheSend(cages.value, threads.value, temperature.value, voltage.value, frequency.value, y.value, object.value);
                 success = true;
 
             } catch (error) {
@@ -347,11 +333,11 @@ function CreateMotor() {
                                 <p className="indent-1 font-semibold mb-1" id="engine_title">Certify engine</p>
                                 <input className="mb-4 border-x-4 border-y-2 border-[#393E46] p-2 rounded-md focus:border-[#393E46] focus:ring-[#393E46] w-full" type="number" id="engine_threads" placeholder="Threads Invoice" />
                                 <input className="mb-4 border-x-4 border-y-2 border-[#393E46] p-2 rounded-md focus:border-[#393E46] focus:ring-[#393E46] w-full" type="number" id="engine_cages" placeholder="Cages Invoice" />
-                                <input className="mb-4 border-x-4 border-y-2 border-[#393E46] p-2 rounded-md focus:border-[#393E46] focus:ring-[#393E46] w-full" type="number" id="engine_temperature" placeholder="Temperature" />
-                                <input className="mb-4 border-x-4 border-y-2 border-[#393E46] p-2 rounded-md focus:border-[#393E46] focus:ring-[#393E46] w-full" type="number" id="engine_voltage" placeholder="Voltage" />
-                                <input className="mb-4 border-x-4 border-y-2 border-[#393E46] p-2 rounded-md focus:border-[#393E46] focus:ring-[#393E46] w-full" type="number" id="engine_frequency" placeholder="Frequency" />
-                                <input className="mb-4 border-x-4 border-y-2 border-[#393E46] p-2 rounded-md focus:border-[#393E46] focus:ring-[#393E46] w-full" type="number" id="engine_y" placeholder="Y" />
-                                <input className="mb-4 border-x-4 border-y-2 border-[#393E46] p-2 rounded-md focus:border-[#393E46] focus:ring-[#393E46] w-full" type="text" id="engine_object" placeholder="Object" />
+                                <input className="mb-4 border-x-4 border-y-2 border-[#393E46] p-2 rounded-md focus:border-[#393E46] focus:ring-[#393E46] w-full" type="number" id="engine_temperature" placeholder="Max Temperature (°C)" />
+                                <input className="mb-4 border-x-4 border-y-2 border-[#393E46] p-2 rounded-md focus:border-[#393E46] focus:ring-[#393E46] w-full" type="number" id="engine_voltage" placeholder="Nominal Voltage (V)" />
+                                <input className="mb-4 border-x-4 border-y-2 border-[#393E46] p-2 rounded-md focus:border-[#393E46] focus:ring-[#393E46] w-full" type="number" id="engine_frequency" placeholder="Nominal Frequency (Hz)" />
+                                <input className="mb-4 border-x-4 border-y-2 border-[#393E46] p-2 rounded-md focus:border-[#393E46] focus:ring-[#393E46] w-full" type="number" id="engine_y" placeholder="Motor Configuration" />
+                                <input className="mb-4 border-x-4 border-y-2 border-[#393E46] p-2 rounded-md focus:border-[#393E46] focus:ring-[#393E46] w-full" type="text" id="engine_object" placeholder="Lotto Serial Number" />
                                 <div className="items-center flex justify-center">
                                     <button type="button" onClick={certifyEngine} className="bg-teal text-sm rounded-lg px-4 py-3 text-[#EEEEEE] w-1/6 ml-1 hover:bg-[#222831]" id="engine_button">Go!</button>
                                 </div>

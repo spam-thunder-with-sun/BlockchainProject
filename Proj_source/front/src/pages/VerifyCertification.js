@@ -88,11 +88,12 @@ function VerifyCertification() {
                         tmp[4] = value[3];
                         tmp[5] = value[4];
                         tmp[6] = value[5];
+                        tmp[7] = value[6];
 
                         if (_type === "pump")
-                            generatePumpPdfDocument(tmp, lotto + "-" +  new Date().toISOString() + ".pdf");
+                            generatePumpPdfDocument(tmp,"Pump-" + lotto + ".pdf");
                         else
-                            generateEnginePdfDocument(tmp, lotto + "-" +  new Date().toISOString() + ".pdf");
+                            generateEnginePdfDocument(tmp, "Engine-" + lotto + ".pdf");
                     });
                     
 
