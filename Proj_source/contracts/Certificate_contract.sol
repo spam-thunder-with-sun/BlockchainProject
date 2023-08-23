@@ -6,9 +6,9 @@ pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 
 contract BaseCertContract {
-    mapping(address => bool) internal m1; //producer that certifies bodyworks and engines
+    mapping(address => bool) internal m1; //producer that certifies 
 
-    mapping(address => bool) internal m2; //user that test pump
+    mapping(address => bool) internal m2; //user that test 
     
     address internal certifier; //who specified the parameter for the verification.
 
@@ -21,14 +21,10 @@ contract BaseCertContract {
     event addedm2(address indexed user);
 
     constructor() public{
-      certifier = msg.sender;     
+      certifier = msg.sender;
     }
 
-    function addcertifier(int infop) external{
-        require(infop>3,"you aren't a cetifier");
-        certifier = msg.sender;
-    }
-
+    
     modifier isCertifier{
       require(certifier == msg.sender, "you are not a certifier");
       _;
