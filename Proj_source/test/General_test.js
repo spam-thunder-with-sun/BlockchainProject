@@ -7,15 +7,7 @@ const truffleAssert = require('truffle-assertions');
 contract("ElectricEngine", accounts => {
 
   before(async () => {
-    projectinstance = await project.deployed();
-
-    await projectinstance.addcertifier(6, {from: accounts[0]});
-
-    //await projectinstance.UserInfos(1,2,3,4,5, { from: accounts[0] });
-
-    //await projectinstance.addmF(6, {from: accounts[3]});
-
-    //await projectinstance.addG(6, {from: accounts[2]});
+    projectinstance = await project.deployed({from: accounts[0]});
 
     await projectinstance.addm2(accounts[1], {from: accounts[0]});
 
