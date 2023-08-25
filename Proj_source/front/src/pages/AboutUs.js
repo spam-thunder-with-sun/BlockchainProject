@@ -11,7 +11,7 @@ function AboutUs() {
     <div>
       <Navbar />
       <div className='flex items-center justify-center my-8'>
-        <h1 className="text-3xl font-bold text-[#EEEEEE]">Our Amazing Team</h1>
+        <h1 className="text-5xl font-semibold text-[#EEEEEE]">Our Amazing Team</h1>
       </div>
       <div className='flex items-center justify-center mb-8'>
         <div className="flex items-center gap-4 w-2/3">

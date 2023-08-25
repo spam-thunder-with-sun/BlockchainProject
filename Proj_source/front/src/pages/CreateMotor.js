@@ -313,8 +313,8 @@ function CreateMotor() {
                 <div className="items-center flex justify-center">
                     <form className="form flex rounded-lg w-1/2 my-8 min-w-[650px]" id="myform" onSubmit={(event) => { event.preventDefault(); }}>
                         <div className="flex-1 px-16 py-8">
-                            <h1 className="text-3xl pb-2 text-center font-bold">
-                                Certificate Electric Engine here
+                            <h1 className="text-4xl font-semibold pb-2 text-center">
+                                Certificate Electric Engine
                             </h1>
                             <br></br>
                             <p className="">Please insert the data of your engine and click on the button</p>

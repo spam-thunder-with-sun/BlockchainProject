@@ -9,7 +9,6 @@ import './index.css';
 import Home from './pages/Home';
 import VerifyCertification from './pages/VerifyCertification';
 import AboutUs from './pages/AboutUs';
-import Admin from './pages/Admin';
 import CreateMotor from './pages/CreateMotor';
 import CreatePump from './pages/CreatePump';
 
@@ -38,11 +37,6 @@ const router = createBrowserRouter([
   {
     path: "/aboutus",
     element: <AboutUs />,
-  },
-
-  {
-    path: "/admin",
-    element: <Admin />,
   },
 ]);
 
