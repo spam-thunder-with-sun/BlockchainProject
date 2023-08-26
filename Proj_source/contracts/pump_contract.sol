@@ -8,7 +8,7 @@ import "./Proj_contract.sol";
 contract ElectricPump is BaseCertContract {
 
     //Struct for a electric pump
-    struct ElecPump {
+    struct ElePump {
         uint body_fatt;
         uint engine_fatt;
         int freq;
@@ -23,7 +23,7 @@ contract ElectricPump is BaseCertContract {
     ElectricEngine el;
 
     //Map that contains all data of electric pumps certified 
-    mapping(bytes32 => ElecPump) private dat;
+    mapping(bytes32 => ElePump) private dat;
 
     mapping(bytes32 => bool) private body;
     mapping(bytes32 => bool) private pump;
