@@ -8,7 +8,7 @@ import "./Certificate_contract.sol";
 contract ElectricEngine is BaseCertContract{
 
     //Struct for a electric engine
-    struct ElecEngine{ 
+    struct EleEngine{ 
  		uint cage_fatt;
         uint thread_fatt;
         int temp;
@@ -19,7 +19,7 @@ contract ElectricEngine is BaseCertContract{
     }
 
     //Map that contains all data of electric engines certified
-    mapping(bytes32 => ElecEngine) private dat;
+    mapping(bytes32 => EleEngine) private dat;
 
     mapping(bytes32 => bool) private cages; 
     mapping(bytes32 => bool) private engines;
