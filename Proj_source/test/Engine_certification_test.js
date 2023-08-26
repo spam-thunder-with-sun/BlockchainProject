@@ -9,28 +9,19 @@ contract("ElectricEngine", accounts => {
   before(async () => {
     projectinstance = await project.deployed({from: accounts[0]});
 
-
     await projectinstance.addm2(accounts[1], {from: accounts[0]});
-
     await projectinstance.addm1(accounts[3], {from: accounts[0]});
   });
 
   it("certification process", async () => {
     
-
-
     await projectinstance.certificateThreads(4,"azienda1",{from: accounts[3]});
-
     await projectinstance.certificateCage(5,"azienda2",{from: accounts[3]});
 
     await projectinstance.certificateEngines(5, 4, 130, 230, 55, -1, "lotto1",{from: accounts[1]});
 
-
-
-    
     const ceritified_engine = await projectinstance.isCertificatedEngines.call("lotto1");
 
-    
     assert.equal(ceritified_engine, true, "The engine is not certified.");
   });
 
@@ -46,16 +37,11 @@ contract("ElectricEngine", accounts => {
   it("wrong test data", async () => {
 
     await projectinstance.certificateThreads(4,"azienda3",{from: accounts[3]});
-
     await projectinstance.certificateCage(5,"azienda4",{from: accounts[3]});
 
     await truffleAssert.reverts(
       projectinstance.certificateEngines(5, 4, 130, 231, 55, 6, "lotto1",{from: accounts[1]}), 
         "Alimentation tension Error"
     );
-
-    
   });
-
-
 });
