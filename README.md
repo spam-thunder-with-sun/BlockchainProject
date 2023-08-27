@@ -1,4 +1,4 @@
-# BlockchainProject
+# BlockchainProject - CERTICHAIN
 
 ## Requirements:
 - nodejs & npm.
