@@ -39,7 +39,7 @@
 - connect, through Metamask, to the first account of Ganache.
 - go to “create motor” and insert in “Add Producer” and “Add Tester” the public address of other two accounts of Ganache and press “Go!”.
 - connect to the account of the producer and insert, in the “create motor” page, the invoice and producer name both for threads and cages and press “Go!”.
-- connect to the account of the tester and insert, in the “create motor” page, the data for the test and certification of a electric engine, that is invoices of the pieces, the threads and the cages, you have inserted before. For instance, if the invoices are 164 and 152 respectively of the threads and the cages, the data you can insert are, in this order:
+- connect to the account of the tester and insert, in the “create motor” page, the data for the test and certification of a electric engine, that is invoices of the pieces, the threads and the cages, you have inserted before. For instance, if the invoices are 152 and 164 respectively of the threads and the cages, the data you can insert are, in this order:
   	- 152
 	- 164
 	- 130
@@ -57,7 +57,7 @@ it is supposed that a lot of engines are already certified through the service.
 - connect, through Metamask, to the first account of Ganache.
 - go to “create pump” and insert in “Add Producer” and “Add Tester” the public address of other two accounts of Ganache and press “Go!”.
 - connect to the account of the producer and insert, in the “create pump” page, the invoice and producer name for bodies and press “Go!”.
-- connect to the account of the tester and check, in the “create pump” page, the box “With Engine Lot Serial Number”. Then insert the data for the test and certification of an electric pump, that is the invoice of the pieces, the bodies you have inserted before and the identification code of a lot of electric engines you have certified before. For instance, if the invoice is 5 and the code is “TRANSIX:12856” respectively of the bodies and the electric engines, the data you can insert are, in this order:
+- connect to the account of the tester and check, in the “create pump” page, the box “With Engine Lot Serial Number”. Then insert the data for the test and certification of an electric pump, that is the invoice of the pieces, the bodies you have inserted before and the identification code of a lot of electric engines you have certified before. For instance, if the invoice is 86 and the code is “TRANSIX:12856” respectively of the bodies and the electric engines, the data you can insert are, in this order:
 	- 86
 	-TRANSIX:12856
 	- 50
@@ -74,7 +74,7 @@ Finally, press “Go!”.
 - connect, through Metamask, to the first account of Ganache.
 - go to “create pump” and insert in “Add Producer” and “Add Tester” the public address of other two accounts of Ganache and press “Go!”.
 - connect to the account of the producer and insert, in the “create pump” page, the invoices and producer names both for bodies and engines and press “Go!”.
-- connect to the account of the tester and check, in the “create pump” page, the box “With Engine Invoice”. Then insert the data for the test and certification of an electric pump, that is invoices of the pieces, bodies and engines, you have inserted before. For instance, if the invoices are 5 and 4 respectively of bodies and engines, the data you can insert are, in this order:
+- connect to the account of the tester and check, in the “create pump” page, the box “With Engine Invoice”. Then insert the data for the test and certification of an electric pump, that is invoices of the pieces, bodies and engines, you have inserted before. For instance, if the invoices are 78 and 149 respectively of bodies and engines, the data you can insert are, in this order:
 	- 78
 	- 149
 	- 50
