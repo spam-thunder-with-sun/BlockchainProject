@@ -36,7 +36,7 @@ function AboutUs() {
             <div className="p-4">
               <img src={riccardo_foto}  alt="" className="rounded rounded-lg shadow border-none"></img>
             </div>
-             <p className="text-center text-[#222831] font-semibold">Worked on the smart contracts and to finilize the business plan.</p>
+             <p className="text-center text-[#222831] font-semibold">Worked on the smart contracts and to finalize the business plan.</p>
           </div>
         </div>
       </div>
