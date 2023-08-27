@@ -19,7 +19,7 @@
 	- insert the host, the port and the network id associated with ganache.
 
 ## Setup to run the Dapp and/or tests (in directory Proj_source):
-- run command `npm install` (or use 'npm install –force') both in the directory “Proj_source” and in the directory “Proj_source/front”.
+- run command `npm install` (or use 'npm install --force') both in the directory “Proj_source” and in the directory “Proj_source/front”.
 - run ganache.
 - run command `truffle compile`.
 - run command `truffle migrate`.
