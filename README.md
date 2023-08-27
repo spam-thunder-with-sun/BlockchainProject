@@ -47,6 +47,7 @@
 	- 55
 	- -1
 	- TRANSIX:12856
+   
 Finally, press “Go!”.
 - you can check the certification of the lot of engines “TRANSIX:12856” in the page “verify certification”. There you must check the box “Electric engine” and insert the identification code “TRANSIX:12856” in the textbox and press “Verify”. On screen you must see a notification that the lot “TRANSIX:12856” is certified.
 
@@ -55,15 +56,16 @@ Finally, press “Go!”.
 it is supposed that a lot of engines are already certified through the service.
 - connect, through Metamask, to the first account of Ganache.
 - go to “create pump” and insert in “Add Producer” and “Add Tester” the public address of other two accounts of Ganache and press “Go!”.
-- then connect to the account of the producer and insert, in the “create pump” page, the invoice and producer name for bodies and press “Go!”.
-- then connect to the account of the tester and check, in the “create pump” page, the box “With Engine Lot Serial Number”. Then insert the data for the test and certification of an electric pump, that is the invoice of the pieces, the bodies you have inserted before and the identification code of a lot of electric engines you have certified before. For instance, if the invoice is 5 and the code is “TRANSIX:12856” respectively of the bodies and the electric engines, the data you can insert are, in this order:
+- connect to the account of the producer and insert, in the “create pump” page, the invoice and producer name for bodies and press “Go!”.
+- connect to the account of the tester and check, in the “create pump” page, the box “With Engine Lot Serial Number”. Then insert the data for the test and certification of an electric pump, that is the invoice of the pieces, the bodies you have inserted before and the identification code of a lot of electric engines you have certified before. For instance, if the invoice is 5 and the code is “TRANSIX:12856” respectively of the bodies and the electric engines, the data you can insert are, in this order:
 	- 86
-	 -TRANSIX:12856
+	-TRANSIX:12856
 	- 50
 	- 2850
 	- 15
 	- 135
 	- HYDROPUMP:458575
+   
 Finally, press “Go!”.
 - then you can check the certification of the lot of pumps “HYDROPUMP:458575” in the page “verify certification”. There you must check the box “Pump” and insert the identification code “HYDROPUMP:458575” in the textbox and press “Verify”. On screen you must see a notification that the lot “HYDROPUMP:458575” is certified.
 
@@ -80,6 +82,7 @@ Finally, press “Go!”.
 	- 15
 	- 135
 	- HYDROPUMP:74823”
+   
 Finally press “Go!”.
 - then you can check the certification of the lot of engines “HYDROPUMP:74823” in the page “verify certification”. There you must check the box “Pump” and insert the identification code “HYDROPUMP:74823” in the textbox and press “Verify”. On screen you must see a notification that the lot “HYDROPUMP:74823”  is certified.
 
