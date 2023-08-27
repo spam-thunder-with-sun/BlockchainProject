@@ -9,13 +9,13 @@ contract ElectricEngine is BaseCertContract{
 
     //Struct for a electric engine
     struct EleEngine{ 
- 		uint cage_fatt;
-        uint thread_fatt;
-        int temp;
-        int ts;
-        int fr;
-        int Y;
-        string object;
+ 		uint cage_fatt; // invoice efor the cage
+        uint thread_fatt; // invoice for the thread
+        int temp; // max temperature tested - must be less the 135
+        int ts; // tension tested - must be 230
+        int fr; // frequency tested - must be 50
+        int Y;  // motor configuration - should be -1
+        string object; // lot number of the engine
     }
 
     //Map that contains all data of electric engines certified
