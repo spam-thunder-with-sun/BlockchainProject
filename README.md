@@ -24,13 +24,13 @@
 - run command `truffle compile`.
 - run command `truffle migrate`.
 
-Test the code (in directory Proj_source):
+## Test the code (in directory Proj_source):
 - run the command `truffle test test/Engine_certification_test.js` for ElectricEngine contract tests.
 - run the command `truffle test test/Pump_certification_test.js` for ElectricPump contract tests.
 - run the command `truffle test test/General_test.js` for BaseCertContract contract tests.
 - run the command `truffle test test/Engine_certification_test_two_factory.js` for ElectricEngine contract tests with two producers.
 
-Run the Dapp (in the directory Proj_source/front):
+## Run the Dapp (in the directory Proj_source/front):
 - run the command `npm start run`.
 
 Run electric engine certification (Disclaimer: any time you change Metamask account you must reload the page) :
