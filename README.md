@@ -7,17 +7,16 @@ Requirements:
 - ganache.
 
 Configuration Ganache:
-create a ganache workspace.
-minimum 5 account.
-link the ganache workspace with the project writing  "path_to_project/truffle-config.js" in "TRUFFLE PROJECTS" in workspace settings.
+- create a ganache workspace with minimum 5 account.
+- link the ganache workspace with the project writing  "path_to_project/truffle-config.js" in "TRUFFLE PROJECTS" in workspace settings.
 
 Configuration Metamask:
-create a new network using network data of ganache, maintaining the network id suggested by Metamask. 
-import every ganache account to Metamask using the private key associated with the ganache account.
+- create a new network using network data of ganache, maintaining the network id suggested by Metamask. 
+- import every ganache account to Metamask using the private key associated with the ganache account.
 
 Configuration “Proj_source”:
-truffle-config.js:
-insert the host, the port and the network id associated with ganache.
+- truffle-config.js:
+	- insert the host, the port and the network id associated with ganache.
 
 Setup to run the Dapp and/or tests (in directory Proj_source):
 run command “npm install” both in the directory “Proj_source” and in the directory “Proj_source/front”.
