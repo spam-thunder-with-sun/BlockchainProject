@@ -9,13 +9,13 @@ contract ElectricPump is BaseCertContract {
 
     //Struct for a electric pump
     struct ElePump {
-        uint body_fatt;
-        uint engine_fatt;
-        int freq;
-        int maxspeed;
-        int maxdepth;
-        int temp;
-        string object;
+        uint body_fatt; // invoice for the body
+        uint engine_fatt; // invoice for the engine
+        int freq; // tested frequency - must be 50
+        int maxspeed; // speed at max load in RPM - must be 2850
+        int maxdepth; // max depth of utilization - must be 15
+        int temp; // max temperatue tested - must less then 135
+        string object; // lot number for the pump
         string lot; //name of electric engine that certify the pump
     }
 
