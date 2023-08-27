@@ -19,17 +19,12 @@ contract("ElectricEngine", accounts => {
 
   it("certification process with engine invoice", async () => {
     
-    await el_instance.certificateThreads(4,"azienda1",{from: accounts[3]});
-    await el_instance.certificateCage(5,"azienda2",{from: accounts[3]});
+    await pu_instance.certificateBody(156,"HYDROPUMP",{from: accounts[3]});
+    await pu_instance.certificateEngine(165,"HYDROPUMP",{from: accounts[3]});
 
-    await el_instance.certificateEngines(5, 4, 130, 230, 55, -1, "lotto1",{from: accounts[1]});
+    await pu_instance.certificatePumpA(156,165, 50, 2850, 15, 135, "HYDROPUMP:458575",{from: accounts[1]});
 
-    await pu_instance.certificateBody(5,"azienda4",{from: accounts[3]});
-    await pu_instance.certificateEngine(4,"azienda3",{from: accounts[3]});
-
-    await pu_instance.certificatePumpA(5,4, 50, 2850, 15, 135, "lotto3",{from: accounts[1]});
-
-    const ceritified_pump = await pu_instance.isCertificatedPump.call("lotto3");
+    const ceritified_pump = await pu_instance.isCertificatedPump.call("HYDROPUMP:458575");
 
     assert.equal(ceritified_pump, true, "The engine is not certified.");
 
@@ -37,15 +32,16 @@ contract("ElectricEngine", accounts => {
 
   it("certification process with ElectricEngine contract", async () => {
     
-    await el_instance.certificateThreads(4,"azienda1",{from: accounts[3]});
-    await el_instance.certificateCage(5,"azienda2",{from: accounts[3]});
+    await el_instance.certificateThreads(164,"TRANSIX",{from: accounts[3]});
+    await el_instance.certificateCage(152,"TRANSIX",{from: accounts[3]});
 
-    await el_instance.certificateEngines(5, 4, 130, 230, 55, -1, "lotto1",{from: accounts[1]});
+    await el_instance.certificateEngines(152, 164, 130, 230, 55, -1, "TRANSIX:12857",{from: accounts[1]});
 
-    await pu_instance.certificateBody(5,"azienda2",{from: accounts[3]});
-    await pu_instance.certificatePumpT(5,"lotto1", 50, 2850, 15, 135, "lotto3",{from: accounts[1]});
+    await pu_instance.certificateBody(165,"HYDROPUMP",{from: accounts[3]});
 
-    const ceritified_pump = await pu_instance.isCertificatedPump.call("lotto3");
+    await pu_instance.certificatePumpT(165,"TRANSIX:12857", 50, 2850, 15, 135, "HYDROPUMP:458575",{from: accounts[1]});
+
+    const ceritified_pump = await pu_instance.isCertificatedPump.call("HYDROPUMP:458575");
 
     assert.equal(ceritified_pump, true, "The engine is not certified.");
 
