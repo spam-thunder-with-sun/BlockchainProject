@@ -1,10 +1,10 @@
 # BlockchainProject
 
 Requirements:
-nodejs & npm.
-truffle.
-metamask plugin in the browser.
-ganache.
+- nodejs & npm.
+- truffle.
+- metamask plugin in the browser.
+- ganache.
 
 Configuration Ganache:
 create a ganache workspace.
