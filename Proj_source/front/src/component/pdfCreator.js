@@ -125,7 +125,7 @@ const PumpDataPDF = (data) => {
   return (
     <Document>
       <Page style={styles.body}>
-        <Text style={styles.title}>Complete lotto data</Text>
+        <Text style={styles.title}>Complete lot data</Text>
         <Text style={styles.author} children={<LottoStr />}></Text>
         <Image src={unitnLogo} style={styles.image} />
         <Text style={styles.subtitle} children={<BodyFattStr />} ></Text>
